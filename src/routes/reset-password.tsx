@@ -24,14 +24,12 @@ function ResetPasswordPage() {
   });
 
   useEffect(() => {
-    // Supabase places #access_token / type=recovery in URL hash; SDK handles it.
+    // Only the PASSWORD_RECOVERY event indicates the user arrived via the
+    // recovery email link. An existing signed-in session is NOT sufficient —
+    // otherwise any logged-in user visiting this URL could silently rotate
+    // their password without going through the email flow.
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "INITIAL_SESSION") {
-        setReady(true);
-      }
-    });
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) setReady(true);
+      if (event === "PASSWORD_RECOVERY") setReady(true);
     });
     return () => sub.subscription.unsubscribe();
   }, []);

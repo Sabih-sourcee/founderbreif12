@@ -4,7 +4,6 @@ import {
   LayoutDashboard,
   FileText,
   CalendarClock,
-  Settings,
   LogOut,
   Menu,
   X,
@@ -12,6 +11,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
+import { useProfile } from "@/hooks/use-profile";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -21,15 +21,21 @@ const nav = [
   { to: "/briefs", label: "Briefs", icon: FileText },
 ];
 
-function initialsFor(email: string | null | undefined) {
-  if (!email) return "·";
-  return email.slice(0, 2).toUpperCase();
+function initialsFor(name: string | null | undefined, email: string | null | undefined) {
+  if (name) {
+    const parts = name.trim().split(/\s+/).slice(0, 2);
+    const letters = parts.map((p) => p[0]).join("");
+    if (letters) return letters.toUpperCase();
+  }
+  if (email) return email.slice(0, 2).toUpperCase();
+  return "·";
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (r) => r.location.pathname });
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { data: profile } = useProfile();
   const qc = useQueryClient();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -43,7 +49,9 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   function isActive(to: string) {
     if (to === "/dashboard") return pathname === "/dashboard";
-    if (to === "/briefs") return pathname === "/briefs" || pathname.startsWith("/brief/") && pathname !== "/brief/new";
+    if (to === "/briefs") {
+      return pathname === "/briefs" || (pathname.startsWith("/brief/") && pathname !== "/brief/new");
+    }
     return pathname === to;
   }
 
@@ -87,20 +95,15 @@ export function AppShell({ children }: { children: ReactNode }) {
       </nav>
 
       <div className="px-3 py-4 border-t border-border space-y-1">
-        <Link
-          to="/dashboard"
-          onClick={() => setMobileOpen(false)}
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[color:var(--subtle-foreground)] hover:bg-surface hover:text-foreground"
-        >
-          <Settings className="h-4 w-4" /> Settings
-        </Link>
         <div className="flex items-center gap-3 px-3 py-2">
           <div className="h-8 w-8 rounded-full bg-surface border border-border flex items-center justify-center text-[11px] font-semibold">
-            {initialsFor(user?.email)}
+            {initialsFor(profile?.full_name, user?.email)}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold truncate">{user?.email}</p>
-            <p className="text-[10px] uppercase tracking-wider text-[color:var(--muted-foreground)]">Free plan</p>
+            <p className="text-xs font-semibold truncate">{profile?.full_name || user?.email}</p>
+            <p className="text-[10px] uppercase tracking-wider text-[color:var(--muted-foreground)]">
+              {profile?.plan === "pro" ? "Pro plan" : "Free plan"}
+            </p>
           </div>
           <button
             onClick={handleSignOut}

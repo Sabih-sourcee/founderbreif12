@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useBrief, useUpdateBrief, useUpdateSection, useDeleteBrief, type BriefSection } from "@/hooks/use-briefs";
 import { SECTION_META, type SectionType, formatWeekLabel } from "@/lib/week";
+import { useBlocker } from "@tanstack/react-router";
 import { ArrowLeft, Check, Loader2, Send, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -34,7 +35,7 @@ function EditBrief() {
     }
   }, [data]);
 
-  // Autosave every 30s if dirty
+  // Autosave: fixed 30s cadence — does NOT reset on every keystroke.
   useEffect(() => {
     if (!data) return;
     const handle = window.setInterval(() => {
@@ -43,7 +44,26 @@ function EditBrief() {
     }, 30_000);
     return () => window.clearInterval(handle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, title, sections]);
+  }, [data?.brief.id]);
+
+  // Warn on tab close / reload when there are unsaved edits.
+  useEffect(() => {
+    function onBeforeUnload(e: BeforeUnloadEvent) {
+      if (!dirtyRef.current) return;
+      e.preventDefault();
+      e.returnValue = "";
+    }
+    window.addEventListener("beforeunload", onBeforeUnload);
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  }, []);
+
+  // Block in-app navigation when there are unsaved edits.
+  useBlocker({
+    shouldBlockFn: () => {
+      if (!dirtyRef.current) return false;
+      return !window.confirm("You have unsaved changes. Leave without saving?");
+    },
+  });
 
   async function saveAll(showToast: boolean) {
     if (!data) return;
@@ -56,7 +76,7 @@ function EditBrief() {
       for (const s of data.sections) {
         const current = sections[s.section_type]?.content ?? "";
         if (current !== (s.content ?? "")) {
-          ops.push(updateSection.mutateAsync({ id: s.id, content: current }));
+          ops.push(updateSection.mutateAsync({ id: s.id, brief_id: data.brief.id, content: current }));
         }
       }
       await Promise.all(ops);
@@ -189,7 +209,11 @@ function SectionEditor({
   value: string;
   onChange: (v: string) => void;
 }) {
-  const meta = SECTION_META[section.section_type as SectionType];
+  const meta = SECTION_META[section.section_type as SectionType] ?? {
+    title: section.section_type,
+    prompt: "",
+    sort_order: section.sort_order,
+  };
   const count = useMemo(() => value.length, [value]);
   return (
     <div className="rounded-2xl border border-border bg-surface p-6">
@@ -200,7 +224,7 @@ function SectionEditor({
         </div>
         <p className="text-[11px] font-semibold text-[color:var(--muted-foreground)]">{count} chars</p>
       </div>
-      <p className="mt-1 text-xs text-[color:var(--subtle-foreground)]">{meta.prompt}</p>
+      {meta.prompt && <p className="mt-1 text-xs text-[color:var(--subtle-foreground)]">{meta.prompt}</p>}
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}

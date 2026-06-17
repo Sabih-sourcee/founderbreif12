@@ -133,9 +133,8 @@ function Nav() {
         <nav className="hidden md:flex items-center gap-8 text-sm text-[color:var(--subtle-foreground)]">
           <a href="#features" className="hover:text-foreground">Features</a>
           <a href="#pricing" className="hover:text-foreground">Pricing</a>
-          <a href="#about" className="hover:text-foreground">About</a>
         </nav>
-        <Btn variant="primary" className="h-10 px-4">Get Early Access</Btn>
+        <Btn variant="primary" href="/auth" className="h-10 px-4">Get Early Access</Btn>
       </Container>
     </header>
   );
@@ -154,8 +153,8 @@ function Hero() {
             FounderBrief distills your strategy, metrics, and priorities into one calm, focused summary — every Monday morning.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <Btn variant="accent">Start for free</Btn>
-            <Btn variant="secondary">See a sample brief</Btn>
+            <Btn variant="accent" href="/auth">Start for free</Btn>
+            <Btn variant="secondary" href="#features">See a sample brief</Btn>
           </div>
           <p className="mt-6 text-xs font-semibold text-[color:var(--muted-foreground)]">
             Trusted by 400+ solo founders
@@ -398,7 +397,7 @@ function FinalCTA() {
           One brief. Every Monday. No noise.
         </h2>
         <div className="mt-10 flex justify-center">
-          <Btn variant="accent">Get early access — it's free</Btn>
+          <Btn variant="accent" href="/auth">Get early access — it's free</Btn>
         </div>
         <p className="mt-4 text-[10px] font-semibold tracking-wider uppercase text-[color:var(--muted-foreground)]">
           No credit card required
@@ -430,7 +429,7 @@ function Footer() {
           <div>
             <p className="eyebrow">Company</p>
             <ul className="mt-3 space-y-2">
-              <li><a href="#about" className="hover:text-foreground text-[color:var(--subtle-foreground)]">About</a></li>
+              <li><a href="/auth" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Sign in</a></li>
               <li><a href="#" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Contact</a></li>
               <li><a href="#" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Privacy</a></li>
             </ul>

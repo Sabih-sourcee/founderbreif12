@@ -28,6 +28,7 @@ type SignUp = z.infer<typeof signUpSchema>;
 function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [signedUpEmail, setSignedUpEmail] = useState<string | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -64,32 +65,54 @@ function AuthPage() {
             <span className="font-bold tracking-[-0.01em]">FounderBrief</span>
           </Link>
 
-          <h2 className="text-2xl font-bold tracking-[-0.02em]">
-            {mode === "signin" ? "Welcome back" : "Create your account"}
-          </h2>
-          <p className="mt-2 text-sm text-[color:var(--subtle-foreground)]">
-            {mode === "signin" ? "Sign in to read this week's brief." : "Start your weekly brief practice."}
-          </p>
+          {signedUpEmail ? (
+            <div className="mt-2">
+              <h2 className="text-2xl font-bold tracking-[-0.02em]">Check your inbox</h2>
+              <p className="mt-2 text-sm text-[color:var(--subtle-foreground)] leading-[1.65]">
+                We sent a confirmation link to <span className="font-semibold text-foreground">{signedUpEmail}</span>.
+                Click it to activate your account, then sign in.
+              </p>
+              <button
+                onClick={() => { setSignedUpEmail(null); setMode("signin"); }}
+                className="mt-6 h-11 w-full rounded-[8px] bg-foreground text-background text-sm font-semibold hover:bg-foreground/90"
+              >
+                Back to sign in
+              </button>
+            </div>
+          ) : (
+            <>
+              <h2 className="text-2xl font-bold tracking-[-0.02em]">
+                {mode === "signin" ? "Welcome back" : "Create your account"}
+              </h2>
+              <p className="mt-2 text-sm text-[color:var(--subtle-foreground)]">
+                {mode === "signin" ? "Sign in to read this week's brief." : "Start your weekly brief practice."}
+              </p>
 
-          {mode === "signin" ? <SignInForm /> : <SignUpForm onDone={() => setMode("signin")} />}
+              {mode === "signin" ? (
+                <SignInForm />
+              ) : (
+                <SignUpForm onDone={(email) => setSignedUpEmail(email)} />
+              )}
 
-          <div className="mt-6 text-sm text-[color:var(--subtle-foreground)]">
-            {mode === "signin" ? (
-              <>
-                New here?{" "}
-                <button onClick={() => setMode("signup")} className="font-semibold text-foreground hover:underline">
-                  Create an account
-                </button>
-              </>
-            ) : (
-              <>
-                Already have an account?{" "}
-                <button onClick={() => setMode("signin")} className="font-semibold text-foreground hover:underline">
-                  Sign in
-                </button>
-              </>
-            )}
-          </div>
+              <div className="mt-6 text-sm text-[color:var(--subtle-foreground)]">
+                {mode === "signin" ? (
+                  <>
+                    New here?{" "}
+                    <button onClick={() => setMode("signup")} className="font-semibold text-foreground hover:underline">
+                      Create an account
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    Already have an account?{" "}
+                    <button onClick={() => setMode("signin")} className="font-semibold text-foreground hover:underline">
+                      Sign in
+                    </button>
+                  </>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -143,7 +166,7 @@ function SignInForm() {
   );
 }
 
-function SignUpForm({ onDone }: { onDone: () => void }) {
+function SignUpForm({ onDone }: { onDone: (email: string) => void }) {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignUp>({
     resolver: zodResolver(signUpSchema),
   });
@@ -161,8 +184,7 @@ function SignUpForm({ onDone }: { onDone: () => void }) {
       toast.error(error.message);
       return;
     }
-    toast.success("Check your inbox to confirm your email.");
-    onDone();
+    onDone(values.email);
   }
 
   return (

@@ -38,17 +38,17 @@
 }
 
 :root {
-  --background: #0E1116;
-  --foreground: #ECEEF2;
-  --surface: #161A21;
-  --muted-foreground: #8A93A0;
-  --subtle-foreground: #B4BAC4;
-  --border: #242A33;
-  --primary: #ECEEF2;
-  --primary-foreground: #0E1116;
-  --accent: #7C9CFF;
-  --accent-foreground: #0E1116;
-  --success: #4ADE80;
+  --background: #FAF8F5;
+  --foreground: #1A1A1A;
+  --surface: #F2EEE8;
+  --muted-foreground: #6B6B6B;
+  --subtle-foreground: #444748;
+  --border: #E5DDD3;
+  --primary: #1A1A1A;
+  --primary-foreground: #FAF8F5;
+  --accent: #E07B39;
+  --accent-foreground: #FFFFFF;
+  --success: #3F7D58;
   --radius: 8px;
 }
 

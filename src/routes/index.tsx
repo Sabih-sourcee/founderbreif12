@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { WaitlistForm } from "@/components/WaitlistForm";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -134,7 +135,7 @@ function Nav() {
           <a href="#features" className="hover:text-foreground">Features</a>
           <a href="#pricing" className="hover:text-foreground">Pricing</a>
         </nav>
-        <Btn variant="primary" href="/auth" className="h-10 px-4">Get Early Access</Btn>
+        <Btn variant="primary" href="#waitlist" className="h-10 px-4">Join waitlist</Btn>
       </Container>
     </header>
   );
@@ -152,12 +153,17 @@ function Hero() {
           <p className="mt-6 max-w-xl text-base md:text-[17px] leading-[1.65] text-[color:var(--subtle-foreground)]">
             FounderBrief distills your strategy, metrics, and priorities into one calm, focused summary — every Monday morning.
           </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <Btn variant="accent" href="/auth">Start for free</Btn>
+          <div id="waitlist" className="mt-8 scroll-mt-24">
+            <WaitlistForm variant="inline" showName submitLabel="Join the waitlist" />
+          </div>
+          <p className="mt-4 text-[11px] text-[color:var(--muted-foreground)]">
+            One brief free · Paid plans from $15/mo · No card required to join
+          </p>
+          <div className="mt-6">
             <Btn variant="secondary" href="#features">See a sample brief</Btn>
           </div>
           <p className="mt-6 text-xs font-semibold text-[color:var(--muted-foreground)]">
-            Trusted by 400+ solo founders
+            Join 400+ founders on the waitlist
           </p>
         </div>
 
@@ -334,16 +340,50 @@ function Testimonials() {
 function Pricing() {
   const tiers = [
     {
-      name: "Free", price: "$0", per: "forever",
-      desc: "Everything you need to ship a weekly brief on your own.",
-      features: ["Weekly email brief", "3 connected sources", "Personal use", "Markdown export"],
-      cta: "Start for free", variant: "secondary" as const, strong: false,
+      name: "Free",
+      price: "$0",
+      per: "to start",
+      desc: "Try FounderBrief with one full brief generation — no card required.",
+      features: [
+        "1 brief generation",
+        "North star, metrics & priorities",
+        "Markdown export",
+        "Personal use",
+      ],
+      cta: "Join waitlist",
+      variant: "secondary" as const,
+      strong: false,
     },
     {
-      name: "Pro", price: "$12", per: "per month",
-      desc: "For founders sharing briefs with their team, investors, and advisors.",
-      features: ["Everything in Free", "Unlimited sources", "Shareable links & PDF", "Investor update mode", "Priority support"],
-      cta: "Get Pro", variant: "accent" as const, strong: true,
+      name: "Monthly",
+      price: "$18",
+      per: "per month",
+      desc: "Full access, billed month to month. Cancel anytime.",
+      features: [
+        "Unlimited brief generations",
+        "Weekly email brief",
+        "Shareable links & PDF",
+        "Investor update mode",
+      ],
+      cta: "Join waitlist",
+      variant: "secondary" as const,
+      strong: false,
+    },
+    {
+      name: "Annual",
+      price: "$15",
+      per: "per month",
+      billed: "$180 billed yearly",
+      desc: "Same full access, save when you commit for the year.",
+      features: [
+        "Everything in Monthly",
+        "Save $36 vs monthly",
+        "Priority support",
+        "Early access to new features",
+      ],
+      cta: "Join waitlist",
+      variant: "accent" as const,
+      strong: true,
     },
   ];
   return (
@@ -353,17 +393,20 @@ function Pricing() {
         <h2 className="mt-4 text-3xl md:text-4xl font-bold tracking-[-0.02em] max-w-2xl">
           Simple, honest pricing.
         </h2>
-        <div className="mt-12 grid md:grid-cols-2 gap-4 max-w-4xl">
+        <p className="mt-3 text-sm text-[color:var(--subtle-foreground)] max-w-xl">
+          One generation free. Then $18/month, or $15/month when billed annually.
+        </p>
+        <div className="mt-12 grid md:grid-cols-3 gap-4">
           {tiers.map((t) => (
             <div
               key={t.name}
-              className={`rounded-2xl bg-background p-8 ${t.strong ? "border border-foreground" : "border border-border"}`}
+              className={`rounded-2xl bg-background p-8 flex flex-col ${t.strong ? "border border-foreground" : "border border-border"}`}
             >
-              <div className="flex items-baseline justify-between">
+              <div className="flex items-baseline justify-between gap-2">
                 <h3 className="text-base font-semibold tracking-[-0.01em]">{t.name}</h3>
                 {t.strong && (
-                  <span className="rounded-[12px] bg-border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider">
-                    Most popular
+                  <span className="rounded-[12px] bg-border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider shrink-0">
+                    Best value
                   </span>
                 )}
               </div>
@@ -371,8 +414,11 @@ function Pricing() {
                 <span className="text-[28px] font-bold tracking-[-0.02em]">{t.price}</span>
                 <span className="ml-2 text-sm text-[color:var(--muted-foreground)]">{t.per}</span>
               </p>
+              {"billed" in t && t.billed && (
+                <p className="mt-1 text-xs text-[color:var(--muted-foreground)]">{t.billed}</p>
+              )}
               <p className="mt-3 text-sm text-[color:var(--subtle-foreground)] leading-[1.65]">{t.desc}</p>
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-6 space-y-3 flex-1">
                 {t.features.map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm">
                     <span className="mt-0.5 text-[color:var(--success)]"><Icons.Check /></span>
@@ -380,7 +426,7 @@ function Pricing() {
                   </li>
                 ))}
               </ul>
-              <Btn variant={t.variant} className="mt-8 w-full">{t.cta}</Btn>
+              <Btn variant={t.variant} href="#waitlist" className="mt-8 w-full">{t.cta}</Btn>
             </div>
           ))}
         </div>
@@ -396,8 +442,11 @@ function FinalCTA() {
         <h2 className="text-3xl md:text-5xl font-bold tracking-[-0.02em] max-w-2xl mx-auto">
           One brief. Every Monday. No noise.
         </h2>
-        <div className="mt-10 flex justify-center">
-          <Btn variant="accent" href="/auth">Get early access — it's free</Btn>
+        <p className="mt-4 text-sm text-[color:var(--subtle-foreground)] max-w-md mx-auto">
+          Join the waitlist and we&apos;ll invite you as soon as a spot opens.
+        </p>
+        <div className="mt-10 flex justify-center px-2">
+          <WaitlistForm variant="stacked" submitLabel="Get early access" />
         </div>
         <p className="mt-4 text-[10px] font-semibold tracking-wider uppercase text-[color:var(--muted-foreground)]">
           No credit card required

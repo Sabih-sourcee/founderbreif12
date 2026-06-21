@@ -9,6 +9,7 @@ import {
   X,
   Plus,
 } from "lucide-react";
+import { LogoLink } from "@/components/Logo";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { useProfile } from "@/hooks/use-profile";
@@ -57,11 +58,8 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const SidebarBody = (
     <div className="flex h-full flex-col">
-      <div className="px-5 py-5 flex items-center gap-2 border-b border-border">
-        <div className="h-8 w-8 rounded-lg border border-border bg-surface flex items-center justify-center">
-          <FileText className="h-4 w-4" />
-        </div>
-        <span className="font-bold tracking-[-0.01em]">FounderBrief</span>
+      <div className="px-5 py-5 border-b border-border">
+        <LogoLink to="/dashboard" size="sm" />
       </div>
 
       <nav className="flex-1 px-3 py-5 space-y-1">
@@ -126,12 +124,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       {/* Mobile top bar */}
       <header className="md:hidden sticky top-0 z-30 bg-background border-b border-border h-14 flex items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded-md border border-border bg-surface flex items-center justify-center">
-            <FileText className="h-3.5 w-3.5" />
-          </div>
-          <span className="font-bold tracking-[-0.01em] text-sm">FounderBrief</span>
-        </div>
+        <LogoLink to="/dashboard" size="xs" />
         <button
           aria-label="Toggle menu"
           onClick={() => setMobileOpen((o) => !o)}

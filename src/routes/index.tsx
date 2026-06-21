@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { WaitlistForm } from "@/components/WaitlistForm";
+import { LogoLink } from "@/components/Logo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -130,7 +131,7 @@ function Nav() {
   return (
     <header className="border-b border-border bg-background sticky top-0 z-30 backdrop-blur-[2px]">
       <Container className="flex h-16 items-center justify-between">
-        <a href="#" className="text-[17px] font-bold tracking-[-0.01em]">FounderBrief</a>
+        <LogoLink to="/" size="sm" />
         <nav className="hidden md:flex items-center gap-8 text-sm text-[color:var(--subtle-foreground)]">
           <a href="#features" className="hover:text-foreground">Features</a>
           <a href="#pricing" className="hover:text-foreground">Pricing</a>
@@ -479,7 +480,7 @@ function Footer() {
     <footer className="bg-background">
       <Container className="py-14 grid md:grid-cols-3 gap-10">
         <div>
-          <p className="text-base font-bold tracking-[-0.01em]">FounderBrief</p>
+          <LogoLink to="/" size="sm" />
           <p className="mt-2 text-sm text-[color:var(--muted-foreground)] max-w-xs leading-[1.65]">
             A weekly brief for founders who'd rather decide than dashboard.
           </p>

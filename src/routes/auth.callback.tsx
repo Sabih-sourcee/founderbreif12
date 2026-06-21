@@ -4,6 +4,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
+import { LogoLink } from "@/components/Logo";
 
 export const Route = createFileRoute("/auth/callback")({
   ssr: false,
@@ -56,7 +57,8 @@ function AuthCallbackPage() {
   }, [navigate]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background p-6 text-center">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background p-6 text-center">
+      <LogoLink to="/" size="sm" />
       <Loader2 className="h-8 w-8 animate-spin text-accent" />
       <p className="text-sm text-[color:var(--subtle-foreground)]">{message}</p>
     </div>

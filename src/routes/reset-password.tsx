@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { FileText } from "lucide-react";
+import { LogoLink } from "@/components/Logo";
 
 export const Route = createFileRoute("/reset-password")({
   ssr: false,
@@ -47,12 +47,7 @@ function ResetPasswordPage() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
-        <div className="inline-flex items-center gap-2 mb-8">
-          <div className="h-7 w-7 rounded-md border border-border bg-surface flex items-center justify-center">
-            <FileText className="h-3.5 w-3.5" />
-          </div>
-          <span className="font-bold tracking-[-0.01em]">FounderBrief</span>
-        </div>
+        <LogoLink to="/" size="xs" className="mb-8" />
         <h1 className="text-2xl font-bold tracking-[-0.02em]">Set a new password</h1>
         <p className="mt-2 text-sm text-[color:var(--subtle-foreground)]">
           Choose a password you'll remember. At least 8 characters.

@@ -1,8 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AlertTriangle } from "lucide-react";
 
 import { DemoFlow } from "@/components/demo/DemoFlow";
+import { LogoLink } from "@/components/Logo";
 import { checkHealth } from "@/lib/demo-api";
 
 export const Route = createFileRoute("/demo")({
@@ -23,9 +24,7 @@ function DemoPage() {
     <div className="min-h-screen bg-background text-foreground font-sans">
       <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <Link to="/" className="text-[17px] font-bold tracking-[-0.01em]">
-            FounderBrief
-          </Link>
+          <LogoLink to="/" size="sm" />
           <span className="eyebrow">Free demo</span>
         </div>
       </header>

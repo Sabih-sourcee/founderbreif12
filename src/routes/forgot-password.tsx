@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { FileText, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { LogoLink } from "@/components/Logo";
 
 export const Route = createFileRoute("/forgot-password")({
   ssr: false,
@@ -37,12 +38,7 @@ function ForgotPasswordPage() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
-        <Link to="/" className="inline-flex items-center gap-2 mb-8">
-          <div className="h-7 w-7 rounded-md border border-border bg-surface flex items-center justify-center">
-            <FileText className="h-3.5 w-3.5" />
-          </div>
-          <span className="font-bold tracking-[-0.01em]">FounderBrief</span>
-        </Link>
+        <LogoLink to="/" size="xs" className="mb-8" />
         <h1 className="text-2xl font-bold tracking-[-0.02em]">Reset your password</h1>
         <p className="mt-2 text-sm text-[color:var(--subtle-foreground)]">
           We'll email you a link to set a new password.

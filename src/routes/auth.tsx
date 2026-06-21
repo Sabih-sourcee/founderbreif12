@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { FileText } from "lucide-react";
+import { LogoLink } from "@/components/Logo";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -48,12 +48,7 @@ function AuthPage() {
   return (
     <div className="min-h-screen bg-background grid md:grid-cols-2">
       <div className="hidden md:flex flex-col justify-between p-12 bg-surface border-r border-border">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg border border-border bg-background flex items-center justify-center">
-            <FileText className="h-4 w-4" />
-          </div>
-          <span className="font-bold tracking-[-0.01em]">FounderBrief</span>
-        </Link>
+        <LogoLink to="/" size="md" className="mb-0" />
         <div>
           <h1 className="text-3xl font-bold tracking-[-0.02em] max-w-md">
             One brief.<br />Every Monday.<br />No noise.
@@ -67,12 +62,7 @@ function AuthPage() {
 
       <div className="flex items-center justify-center p-6 md:p-12">
         <div className="w-full max-w-sm">
-          <Link to="/" className="md:hidden mb-8 inline-flex items-center gap-2">
-            <div className="h-7 w-7 rounded-md border border-border bg-surface flex items-center justify-center">
-              <FileText className="h-3.5 w-3.5" />
-            </div>
-            <span className="font-bold tracking-[-0.01em]">FounderBrief</span>
-          </Link>
+          <LogoLink to="/" size="xs" className="mb-8 md:hidden" />
 
           {configError ? (
             <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-4 text-left text-sm text-red-800">
@@ -223,9 +213,17 @@ function SignUpForm({ onDone }: { onDone: (email: string) => void }) {
       },
     });
     if (error) {
-      const message = error.message.toLowerCase().includes("already registered")
-        ? "This email is already registered. Try signing in instead."
-        : error.message;
+      let message = error.message;
+      if (error.message.toLowerCase().includes("already registered")) {
+        message = "This email is already registered. Try signing in instead.";
+      } else if (
+        error.status === 500 ||
+        error.message.toLowerCase().includes("confirmation email") ||
+        error.message.toLowerCase().includes("sending email")
+      ) {
+        message =
+          "Account may have been created, but the confirmation email failed to send. Ask your admin to disable email confirmation in Supabase, or fix the Resend/SMTP sender domain. Then try signing in.";
+      }
       setAuthError(message);
       toast.error(message);
       return;

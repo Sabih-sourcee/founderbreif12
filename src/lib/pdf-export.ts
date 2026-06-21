@@ -13,6 +13,8 @@ function stripMarkdown(md: string): string {
 export async function downloadBriefPdf(brief: ProjectBrief): Promise<void> {
   const { jsPDF } = await import("jspdf");
 
+  const logoDataUrl = await loadLogoDataUrl();
+
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
@@ -20,8 +22,15 @@ export async function downloadBriefPdf(brief: ProjectBrief): Promise<void> {
   const maxWidth = pageWidth - margin * 2;
   let y = margin;
 
+  const stampWatermark = () => {
+    const logoW = 42;
+    const logoH = 10;
+    doc.addImage(logoDataUrl, "PNG", pageWidth - margin - logoW, pageHeight - 14, logoW, logoH);
+  };
+
   const addPageIfNeeded = (needed: number) => {
-    if (y + needed > pageHeight - margin) {
+    if (y + needed > pageHeight - margin - 12) {
+      stampWatermark();
       doc.addPage();
       y = margin;
     }
@@ -49,6 +58,9 @@ export async function downloadBriefPdf(brief: ProjectBrief): Promise<void> {
   const plain = stripMarkdown(content);
   const sections = plain.split(/\n{2,}/).filter(Boolean);
 
+  doc.addImage(logoDataUrl, "PNG", margin, y, 48, 11);
+  y += 16;
+
   addText(brief.title, 20, "bold");
   y += 4;
   addText(`Generated ${new Date(brief.createdAt).toLocaleDateString()}`, 9);
@@ -67,7 +79,24 @@ export async function downloadBriefPdf(brief: ProjectBrief): Promise<void> {
     y += 2;
   }
 
+  const pageCount = doc.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    stampWatermark();
+  }
+
   doc.save(`${brief.title.replace(/[^a-zA-Z0-9]/g, "_")}_brief.pdf`);
+}
+
+async function loadLogoDataUrl(): Promise<string> {
+  const res = await fetch("/logo.png");
+  const blob = await res.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
 }
 
 function buildFallbackMarkdown(brief: ProjectBrief): string {

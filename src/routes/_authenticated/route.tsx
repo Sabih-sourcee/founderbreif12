@@ -6,9 +6,12 @@ import { AuthProvider } from "@/lib/auth";
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
   beforeLoad: async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error || !data.user) throw redirect({ to: "/auth" });
-    return { user: data.user };
+    if (typeof window !== "undefined" && window.location.hash.includes("access_token")) {
+      await supabase.auth.getSession();
+    }
+    const { data: sessionData } = await supabase.auth.getSession();
+    if (!sessionData.session) throw redirect({ to: "/auth" });
+    return { user: sessionData.session.user };
   },
   component: AuthenticatedLayout,
 });

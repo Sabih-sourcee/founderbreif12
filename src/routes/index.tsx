@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { WaitlistForm } from "@/components/WaitlistForm";
 
 export const Route = createFileRoute("/")({
@@ -135,7 +135,17 @@ function Nav() {
           <a href="#features" className="hover:text-foreground">Features</a>
           <a href="#pricing" className="hover:text-foreground">Pricing</a>
         </nav>
-        <Btn variant="primary" href="#waitlist" className="h-10 px-4">Join waitlist</Btn>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/demo"
+            className="hidden h-10 items-center justify-center rounded-[8px] border border-border bg-transparent px-4 text-sm font-semibold text-foreground transition-colors hover:bg-surface sm:inline-flex"
+          >
+            Try demo
+          </Link>
+          <Btn variant="primary" href="#waitlist" className="h-10 px-4">
+            Join waitlist
+          </Btn>
+        </div>
       </Container>
     </header>
   );
@@ -153,15 +163,23 @@ function Hero() {
           <p className="mt-6 max-w-xl text-base md:text-[17px] leading-[1.65] text-[color:var(--subtle-foreground)]">
             FounderBrief distills your strategy, metrics, and priorities into one calm, focused summary — every Monday morning.
           </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Link
+              to="/demo"
+              className="inline-flex h-12 items-center justify-center rounded-[8px] bg-accent px-6 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent/90"
+            >
+              Try free demo
+            </Link>
+            <Btn variant="secondary" href="#features">
+              See features
+            </Btn>
+          </div>
           <div id="waitlist" className="mt-8 scroll-mt-24">
             <WaitlistForm variant="inline" showName submitLabel="Join the waitlist" />
           </div>
           <p className="mt-4 text-[11px] text-[color:var(--muted-foreground)]">
-            One brief free · Paid plans from $15/mo · No card required to join
+            One free demo · Paid plans from $15/mo · No card required to join
           </p>
-          <div className="mt-6">
-            <Btn variant="secondary" href="#features">See a sample brief</Btn>
-          </div>
           <p className="mt-6 text-xs font-semibold text-[color:var(--muted-foreground)]">
             Join 400+ founders on the waitlist
           </p>

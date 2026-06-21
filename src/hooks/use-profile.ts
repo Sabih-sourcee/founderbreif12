@@ -7,6 +7,7 @@ export type Profile = {
   full_name: string | null;
   avatar_url: string | null;
   plan: "free" | "pro";
+  role: "user" | "admin";
 };
 
 export function useProfile() {
@@ -18,7 +19,7 @@ export function useProfile() {
       if (!uid) return null;
       const { data, error } = await supabase
         .from("profiles")
-        .select("id, email, full_name, avatar_url, plan")
+        .select("id, email, full_name, avatar_url, plan, role")
         .eq("id", uid)
         .maybeSingle();
       if (error) throw error;

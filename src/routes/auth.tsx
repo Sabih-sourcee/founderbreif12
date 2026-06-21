@@ -29,11 +29,20 @@ function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [signedUpEmail, setSignedUpEmail] = useState<string | null>(null);
+  const [configError, setConfigError] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/dashboard", replace: true });
-    });
+    try {
+      supabase.auth.getSession().then(({ data }) => {
+        if (data.session) navigate({ to: "/dashboard", replace: true });
+      });
+    } catch (err) {
+      setConfigError(
+        err instanceof Error
+          ? err.message
+          : "Auth is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY on Vercel.",
+      );
+    }
   }, [navigate]);
 
   return (
@@ -65,7 +74,18 @@ function AuthPage() {
             <span className="font-bold tracking-[-0.01em]">FounderBrief</span>
           </Link>
 
-          {signedUpEmail ? (
+          {configError ? (
+            <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-4 text-left text-sm text-red-800">
+              <p className="font-semibold">Auth configuration error</p>
+              <p className="mt-2 leading-relaxed">{configError}</p>
+              <p className="mt-3 text-xs leading-relaxed">
+                In Vercel → Settings → Environment Variables, add{" "}
+                <code className="rounded bg-red-100 px-1">VITE_SUPABASE_URL</code> and{" "}
+                <code className="rounded bg-red-100 px-1">VITE_SUPABASE_PUBLISHABLE_KEY</code>, then
+                redeploy.
+              </p>
+            </div>
+          ) : signedUpEmail ? (
             <div className="mt-2">
               <h2 className="text-2xl font-bold tracking-[-0.02em]">Check your inbox</h2>
               <p className="mt-2 text-sm text-[color:var(--subtle-foreground)] leading-[1.65]">
@@ -125,23 +145,42 @@ const labelCls = "text-xs font-semibold text-[color:var(--subtle-foreground)]";
 const errCls = "text-xs text-[color:var(--destructive)] mt-1";
 
 function SignInForm() {
-  const navigate = useNavigate();
+  const [authError, setAuthError] = useState<string | null>(null);
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignIn>({
     resolver: zodResolver(signInSchema),
   });
 
   async function onSubmit(values: SignIn) {
-    const { error } = await supabase.auth.signInWithPassword(values);
+    setAuthError(null);
+    const { data, error } = await supabase.auth.signInWithPassword(values);
     if (error) {
-      toast.error(error.message);
+      let message = error.message;
+      if (error.message.toLowerCase().includes("email not confirmed")) {
+        message = "Confirm your email first — check your inbox for the activation link.";
+      } else if (error.message.toLowerCase().includes("invalid login credentials")) {
+        message = "Wrong email or password. If you just signed up, confirm your email first.";
+      }
+      setAuthError(message);
+      toast.error(message);
+      return;
+    }
+    if (!data.session) {
+      const message = "Sign in failed — no session returned. Try again or reset your password.";
+      setAuthError(message);
+      toast.error(message);
       return;
     }
     toast.success("Welcome back");
-    navigate({ to: "/dashboard", replace: true });
+    window.location.href = "/dashboard";
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-4">
+      {authError && (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-xs leading-relaxed text-red-800">
+          {authError}
+        </div>
+      )}
       <div>
         <label className={labelCls} htmlFor="email">Email</label>
         <input id="email" type="email" autoComplete="email" className={`${inputCls} mt-1.5`} {...register("email")} />
@@ -167,21 +206,33 @@ function SignInForm() {
 }
 
 function SignUpForm({ onDone }: { onDone: (email: string) => void }) {
+  const [authError, setAuthError] = useState<string | null>(null);
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignUp>({
     resolver: zodResolver(signUpSchema),
   });
 
   async function onSubmit(values: SignUp) {
-    const { error } = await supabase.auth.signUp({
+    setAuthError(null);
+    const redirectTo = `${window.location.origin}/auth/callback`;
+    const { data, error } = await supabase.auth.signUp({
       email: values.email,
       password: values.password,
       options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
+        emailRedirectTo: redirectTo,
         data: { full_name: values.full_name },
       },
     });
     if (error) {
-      toast.error(error.message);
+      const message = error.message.toLowerCase().includes("already registered")
+        ? "This email is already registered. Try signing in instead."
+        : error.message;
+      setAuthError(message);
+      toast.error(message);
+      return;
+    }
+    if (data.session) {
+      toast.success("Account created!");
+      window.location.href = "/dashboard";
       return;
     }
     onDone(values.email);
@@ -189,6 +240,11 @@ function SignUpForm({ onDone }: { onDone: (email: string) => void }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-4">
+      {authError && (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-xs leading-relaxed text-red-800">
+          {authError}
+        </div>
+      )}
       <div>
         <label className={labelCls} htmlFor="full_name">Your name</label>
         <input id="full_name" autoComplete="name" className={`${inputCls} mt-1.5`} {...register("full_name")} />

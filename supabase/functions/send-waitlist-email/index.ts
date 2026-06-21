@@ -1,9 +1,10 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-const FROM_EMAIL =
-  Deno.env.get("WAITLIST_FROM_EMAIL") ?? "FounderBrief <onboarding@resend.dev>";
-const APP_URL = Deno.env.get("APP_URL") ?? "https://founderbrief.com";
+// Free tier: Brevo — 300 emails/day, no credit card (https://www.brevo.com/pricing/)
+const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY");
+const FROM_EMAIL = Deno.env.get("WAITLIST_FROM_EMAIL") ?? "";
+const FROM_NAME = Deno.env.get("WAITLIST_FROM_NAME") ?? "FounderBrief";
+const APP_URL = Deno.env.get("APP_URL") ?? "https://founderbreif.vercel.app";
 
 type EmailType = "welcome" | "invite";
 
@@ -28,7 +29,7 @@ function welcomeHtml(name: string): string {
       <p style="font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #666;">FounderBrief</p>
       <h1 style="font-size: 28px; line-height: 1.2; margin: 16px 0 12px;">You're on the waitlist</h1>
       <p>Hi ${name},</p>
-      <p>Thanks for joining the FounderBrief waitlist. We're rolling out early access in small batches — you'll get an email from us as soon as a spot opens for you.</p>
+      <p>Thanks for joining the FounderBrief waitlist. We're rolling out early access in small batches — you'll get another email from us as soon as a spot opens for you.</p>
       <p>Until then, one calm brief every Monday is almost yours.</p>
       <p style="color: #666; font-size: 14px; margin-top: 32px;">— The FounderBrief team</p>
     </div>
@@ -53,13 +54,19 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+function parseFromEmail(raw: string): { email: string; name: string } {
+  const match = /^(.+?)\s*<([^>]+)>$/.exec(raw.trim());
+  if (match) return { name: match[1].trim(), email: match[2].trim() };
+  return { name: FROM_NAME, email: raw.trim() };
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
-  if (!RESEND_API_KEY) {
-    console.error("RESEND_API_KEY is not set");
+  if (!BREVO_API_KEY || !FROM_EMAIL) {
+    console.error("BREVO_API_KEY or WAITLIST_FROM_EMAIL is not set");
     return new Response(JSON.stringify({ error: "Email service not configured" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -84,33 +91,35 @@ Deno.serve(async (req: Request) => {
       type === "invite"
         ? "You're in — FounderBrief early access"
         : "You're on the FounderBrief waitlist";
-    const html = type === "invite" ? inviteHtml(name, APP_URL) : welcomeHtml(name);
+    const htmlContent = type === "invite" ? inviteHtml(name, APP_URL) : welcomeHtml(name);
+    const sender = parseFromEmail(FROM_EMAIL);
 
-    const resendRes = await fetch("https://api.resend.com/emails", {
+    const brevoRes = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "api-key": BREVO_API_KEY,
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [email],
+        sender: { name: sender.name || FROM_NAME, email: sender.email },
+        to: [{ email, name: full_name ?? undefined }],
         subject,
-        html,
+        htmlContent,
       }),
     });
 
-    if (!resendRes.ok) {
-      const errText = await resendRes.text();
-      console.error("Resend error:", resendRes.status, errText);
+    if (!brevoRes.ok) {
+      const errText = await brevoRes.text();
+      console.error("Brevo error:", brevoRes.status, errText);
       return new Response(JSON.stringify({ error: "Failed to send email" }), {
         status: 502,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const result = await resendRes.json();
-    return new Response(JSON.stringify({ ok: true, id: result.id }), {
+    const result = await brevoRes.json();
+    return new Response(JSON.stringify({ ok: true, id: result.messageId }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {

@@ -11,9 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as DemoRouteImport } from './routes/demo'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
+import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as ApiGenerateBriefRouteImport } from './routes/api/generate-brief'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBriefsRouteImport } from './routes/_authenticated/briefs'
 import { Route as AuthenticatedBriefNewRouteImport } from './routes/_authenticated/brief.new'
@@ -29,6 +33,11 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoRoute = DemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -41,6 +50,21 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/callback',
+  path: '/callback',
+  getParentRoute: () => AuthRoute,
+} as any)
+const ApiHealthRoute = ApiHealthRouteImport.update({
+  id: '/api/health',
+  path: '/api/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiGenerateBriefRoute = ApiGenerateBriefRouteImport.update({
+  id: '/api/generate-brief',
+  path: '/api/generate-brief',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -67,21 +91,29 @@ const AuthenticatedBriefIdEditRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/demo': typeof DemoRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/briefs': typeof AuthenticatedBriefsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/generate-brief': typeof ApiGenerateBriefRoute
+  '/api/health': typeof ApiHealthRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/brief/new': typeof AuthenticatedBriefNewRoute
   '/brief/$id/edit': typeof AuthenticatedBriefIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/demo': typeof DemoRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/briefs': typeof AuthenticatedBriefsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/generate-brief': typeof ApiGenerateBriefRoute
+  '/api/health': typeof ApiHealthRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/brief/new': typeof AuthenticatedBriefNewRoute
   '/brief/$id/edit': typeof AuthenticatedBriefIdEditRoute
 }
@@ -89,11 +121,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/demo': typeof DemoRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/briefs': typeof AuthenticatedBriefsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/generate-brief': typeof ApiGenerateBriefRoute
+  '/api/health': typeof ApiHealthRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/_authenticated/brief/new': typeof AuthenticatedBriefNewRoute
   '/_authenticated/brief/$id/edit': typeof AuthenticatedBriefIdEditRoute
 }
@@ -102,20 +138,28 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/demo'
     | '/forgot-password'
     | '/reset-password'
     | '/briefs'
     | '/dashboard'
+    | '/api/generate-brief'
+    | '/api/health'
+    | '/auth/callback'
     | '/brief/new'
     | '/brief/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/demo'
     | '/forgot-password'
     | '/reset-password'
     | '/briefs'
     | '/dashboard'
+    | '/api/generate-brief'
+    | '/api/health'
+    | '/auth/callback'
     | '/brief/new'
     | '/brief/$id/edit'
   id:
@@ -123,10 +167,14 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/demo'
     | '/forgot-password'
     | '/reset-password'
     | '/_authenticated/briefs'
     | '/_authenticated/dashboard'
+    | '/api/generate-brief'
+    | '/api/health'
+    | '/auth/callback'
     | '/_authenticated/brief/new'
     | '/_authenticated/brief/$id/edit'
   fileRoutesById: FileRoutesById
@@ -134,9 +182,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  AuthRoute: typeof AuthRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  DemoRoute: typeof DemoRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiGenerateBriefRoute: typeof ApiGenerateBriefRoute
+  ApiHealthRoute: typeof ApiHealthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -153,6 +204,13 @@ declare module '@tanstack/react-router' {
       path: '/forgot-password'
       fullPath: '/forgot-password'
       preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -174,6 +232,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/api/health': {
+      id: '/api/health'
+      path: '/api/health'
+      fullPath: '/api/health'
+      preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/generate-brief': {
+      id: '/api/generate-brief'
+      path: '/api/generate-brief'
+      fullPath: '/api/generate-brief'
+      preLoaderRoute: typeof ApiGenerateBriefRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard': {
@@ -224,12 +303,25 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface AuthRouteChildren {
+  AuthCallbackRoute: typeof AuthCallbackRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthCallbackRoute: AuthCallbackRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  AuthRoute: AuthRoute,
+  AuthRoute: AuthRouteWithChildren,
+  DemoRoute: DemoRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiGenerateBriefRoute: ApiGenerateBriefRoute,
+  ApiHealthRoute: ApiHealthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

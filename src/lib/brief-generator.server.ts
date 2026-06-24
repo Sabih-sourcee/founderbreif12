@@ -1,5 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
+import { appGeminiKey } from "@/lib/app-env.server";
 import type { BriefAnswers, BriefApiResponse } from "@/types/brief";
 
 function cleanAndExtractTitle(idea: string): string {
@@ -349,10 +350,10 @@ export async function generateBriefFromIdea(
   idea: string,
   answers: BriefAnswers,
 ): Promise<BriefApiResponse> {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = appGeminiKey();
 
   if (!apiKey) {
-    console.warn("GEMINI_API_KEY is not configured. Using heuristic brief builder.");
+    console.warn("APP_GEMINI_API_KEY is not configured. Using heuristic brief builder.");
     return buildHeuristicBrief(idea, answers);
   }
 
@@ -528,10 +529,35 @@ Also generate rawMarkdown: the full brief formatted as clean Markdown matching t
   }
 }
 
+export async function transcribeAudio(base64: string, mimeType: string): Promise<string> {
+  const apiKey = appGeminiKey();
+  if (!apiKey) throw new Error("APP_GEMINI_API_KEY is not configured.");
+
+  const ai = new GoogleGenAI({ apiKey });
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: [
+      {
+        role: "user",
+        parts: [
+          { inlineData: { mimeType, data: base64 } },
+          {
+            text: `Transcribe the founder's spoken startup product idea from this audio.
+Return ONLY the transcription as plain text — no labels, no commentary.
+Preserve mixed languages if spoken.`,
+          },
+        ],
+      },
+    ],
+  });
+
+  return (response.text ?? "").trim();
+}
+
 export function corsHeaders(): HeadersInit {
   return {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Device-Id",
   };
 }

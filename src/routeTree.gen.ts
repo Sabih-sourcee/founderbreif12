@@ -16,10 +16,13 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
+import { Route as ApiTranscribeVoiceRouteImport } from './routes/api/transcribe-voice'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as ApiGenerationStatusRouteImport } from './routes/api/generation-status'
 import { Route as ApiGenerateBriefRouteImport } from './routes/api/generate-brief'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBriefsRouteImport } from './routes/_authenticated/briefs'
+import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
 import { Route as AuthenticatedBriefNewRouteImport } from './routes/_authenticated/brief.new'
 import { Route as AuthenticatedBriefIdEditRouteImport } from './routes/_authenticated/brief.$id.edit'
 
@@ -57,9 +60,19 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/callback',
   getParentRoute: () => AuthRoute,
 } as any)
+const ApiTranscribeVoiceRoute = ApiTranscribeVoiceRouteImport.update({
+  id: '/api/transcribe-voice',
+  path: '/api/transcribe-voice',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
   id: '/api/health',
   path: '/api/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiGenerationStatusRoute = ApiGenerationStatusRouteImport.update({
+  id: '/api/generation-status',
+  path: '/api/generation-status',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiGenerateBriefRoute = ApiGenerateBriefRouteImport.update({
@@ -76,6 +89,11 @@ const AuthenticatedBriefsRoute = AuthenticatedBriefsRouteImport.update({
   id: '/briefs',
   path: '/briefs',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiAuthLoginRoute = ApiAuthLoginRouteImport.update({
+  id: '/api/auth/login',
+  path: '/api/auth/login',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedBriefNewRoute = AuthenticatedBriefNewRouteImport.update({
   id: '/brief/new',
@@ -98,9 +116,12 @@ export interface FileRoutesByFullPath {
   '/briefs': typeof AuthenticatedBriefsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/generate-brief': typeof ApiGenerateBriefRoute
+  '/api/generation-status': typeof ApiGenerationStatusRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/transcribe-voice': typeof ApiTranscribeVoiceRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/brief/new': typeof AuthenticatedBriefNewRoute
+  '/api/auth/login': typeof ApiAuthLoginRoute
   '/brief/$id/edit': typeof AuthenticatedBriefIdEditRoute
 }
 export interface FileRoutesByTo {
@@ -112,9 +133,12 @@ export interface FileRoutesByTo {
   '/briefs': typeof AuthenticatedBriefsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/generate-brief': typeof ApiGenerateBriefRoute
+  '/api/generation-status': typeof ApiGenerationStatusRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/transcribe-voice': typeof ApiTranscribeVoiceRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/brief/new': typeof AuthenticatedBriefNewRoute
+  '/api/auth/login': typeof ApiAuthLoginRoute
   '/brief/$id/edit': typeof AuthenticatedBriefIdEditRoute
 }
 export interface FileRoutesById {
@@ -128,9 +152,12 @@ export interface FileRoutesById {
   '/_authenticated/briefs': typeof AuthenticatedBriefsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/api/generate-brief': typeof ApiGenerateBriefRoute
+  '/api/generation-status': typeof ApiGenerationStatusRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/transcribe-voice': typeof ApiTranscribeVoiceRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/_authenticated/brief/new': typeof AuthenticatedBriefNewRoute
+  '/api/auth/login': typeof ApiAuthLoginRoute
   '/_authenticated/brief/$id/edit': typeof AuthenticatedBriefIdEditRoute
 }
 export interface FileRouteTypes {
@@ -144,9 +171,12 @@ export interface FileRouteTypes {
     | '/briefs'
     | '/dashboard'
     | '/api/generate-brief'
+    | '/api/generation-status'
     | '/api/health'
+    | '/api/transcribe-voice'
     | '/auth/callback'
     | '/brief/new'
+    | '/api/auth/login'
     | '/brief/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -158,9 +188,12 @@ export interface FileRouteTypes {
     | '/briefs'
     | '/dashboard'
     | '/api/generate-brief'
+    | '/api/generation-status'
     | '/api/health'
+    | '/api/transcribe-voice'
     | '/auth/callback'
     | '/brief/new'
+    | '/api/auth/login'
     | '/brief/$id/edit'
   id:
     | '__root__'
@@ -173,9 +206,12 @@ export interface FileRouteTypes {
     | '/_authenticated/briefs'
     | '/_authenticated/dashboard'
     | '/api/generate-brief'
+    | '/api/generation-status'
     | '/api/health'
+    | '/api/transcribe-voice'
     | '/auth/callback'
     | '/_authenticated/brief/new'
+    | '/api/auth/login'
     | '/_authenticated/brief/$id/edit'
   fileRoutesById: FileRoutesById
 }
@@ -187,7 +223,10 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ApiGenerateBriefRoute: typeof ApiGenerateBriefRoute
+  ApiGenerationStatusRoute: typeof ApiGenerationStatusRoute
   ApiHealthRoute: typeof ApiHealthRoute
+  ApiTranscribeVoiceRoute: typeof ApiTranscribeVoiceRoute
+  ApiAuthLoginRoute: typeof ApiAuthLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -241,11 +280,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/api/transcribe-voice': {
+      id: '/api/transcribe-voice'
+      path: '/api/transcribe-voice'
+      fullPath: '/api/transcribe-voice'
+      preLoaderRoute: typeof ApiTranscribeVoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/health': {
       id: '/api/health'
       path: '/api/health'
       fullPath: '/api/health'
       preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/generation-status': {
+      id: '/api/generation-status'
+      path: '/api/generation-status'
+      fullPath: '/api/generation-status'
+      preLoaderRoute: typeof ApiGenerationStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/generate-brief': {
@@ -268,6 +321,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/briefs'
       preLoaderRoute: typeof AuthenticatedBriefsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/auth/login': {
+      id: '/api/auth/login'
+      path: '/api/auth/login'
+      fullPath: '/api/auth/login'
+      preLoaderRoute: typeof ApiAuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/brief/new': {
       id: '/_authenticated/brief/new'
@@ -321,7 +381,10 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ApiGenerateBriefRoute: ApiGenerateBriefRoute,
+  ApiGenerationStatusRoute: ApiGenerationStatusRoute,
   ApiHealthRoute: ApiHealthRoute,
+  ApiTranscribeVoiceRoute: ApiTranscribeVoiceRoute,
+  ApiAuthLoginRoute: ApiAuthLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

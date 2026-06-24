@@ -15,8 +15,8 @@ export const Route = createFileRoute("/api/generation-status")({
           {
             isAdmin,
             used: 0,
-            limit: isAdmin ? null : 3,
-            remaining: isAdmin ? null : 3,
+            limit: isAdmin ? null : 1,
+            remaining: isAdmin ? null : 1,
           },
           { headers: corsHeaders() },
         );

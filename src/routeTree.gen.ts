@@ -10,8 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as PrivayRouteImport } from './routes/privay'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DemoRouteImport } from './routes/demo'
+import { Route as DeleteAccountRouteImport } from './routes/delete-account'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -20,6 +22,7 @@ import { Route as ApiTranscribeVoiceRouteImport } from './routes/api/transcribe-
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ApiGenerationStatusRouteImport } from './routes/api/generation-status'
 import { Route as ApiGenerateBriefRouteImport } from './routes/api/generate-brief'
+import { Route as ApiDeleteAccountRouteImport } from './routes/api/delete-account'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBriefsRouteImport } from './routes/_authenticated/briefs'
 import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
@@ -31,6 +34,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivayRoute = PrivayRouteImport.update({
+  id: '/privay',
+  path: '/privay',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
@@ -39,6 +47,11 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
 const DemoRoute = DemoRouteImport.update({
   id: '/demo',
   path: '/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeleteAccountRoute = DeleteAccountRouteImport.update({
+  id: '/delete-account',
+  path: '/delete-account',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -80,6 +93,11 @@ const ApiGenerateBriefRoute = ApiGenerateBriefRouteImport.update({
   path: '/api/generate-brief',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiDeleteAccountRoute = ApiDeleteAccountRouteImport.update({
+  id: '/api/delete-account',
+  path: '/api/delete-account',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -110,11 +128,14 @@ const AuthenticatedBriefIdEditRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/delete-account': typeof DeleteAccountRoute
   '/demo': typeof DemoRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/privay': typeof PrivayRoute
   '/reset-password': typeof ResetPasswordRoute
   '/briefs': typeof AuthenticatedBriefsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/delete-account': typeof ApiDeleteAccountRoute
   '/api/generate-brief': typeof ApiGenerateBriefRoute
   '/api/generation-status': typeof ApiGenerationStatusRoute
   '/api/health': typeof ApiHealthRoute
@@ -127,11 +148,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/delete-account': typeof DeleteAccountRoute
   '/demo': typeof DemoRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/privay': typeof PrivayRoute
   '/reset-password': typeof ResetPasswordRoute
   '/briefs': typeof AuthenticatedBriefsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/delete-account': typeof ApiDeleteAccountRoute
   '/api/generate-brief': typeof ApiGenerateBriefRoute
   '/api/generation-status': typeof ApiGenerationStatusRoute
   '/api/health': typeof ApiHealthRoute
@@ -146,11 +170,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
+  '/delete-account': typeof DeleteAccountRoute
   '/demo': typeof DemoRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/privay': typeof PrivayRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/briefs': typeof AuthenticatedBriefsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/api/delete-account': typeof ApiDeleteAccountRoute
   '/api/generate-brief': typeof ApiGenerateBriefRoute
   '/api/generation-status': typeof ApiGenerationStatusRoute
   '/api/health': typeof ApiHealthRoute
@@ -165,11 +192,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/delete-account'
     | '/demo'
     | '/forgot-password'
+    | '/privay'
     | '/reset-password'
     | '/briefs'
     | '/dashboard'
+    | '/api/delete-account'
     | '/api/generate-brief'
     | '/api/generation-status'
     | '/api/health'
@@ -182,11 +212,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/delete-account'
     | '/demo'
     | '/forgot-password'
+    | '/privay'
     | '/reset-password'
     | '/briefs'
     | '/dashboard'
+    | '/api/delete-account'
     | '/api/generate-brief'
     | '/api/generation-status'
     | '/api/health'
@@ -200,11 +233,14 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/delete-account'
     | '/demo'
     | '/forgot-password'
+    | '/privay'
     | '/reset-password'
     | '/_authenticated/briefs'
     | '/_authenticated/dashboard'
+    | '/api/delete-account'
     | '/api/generate-brief'
     | '/api/generation-status'
     | '/api/health'
@@ -219,9 +255,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
+  DeleteAccountRoute: typeof DeleteAccountRoute
   DemoRoute: typeof DemoRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  PrivayRoute: typeof PrivayRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiDeleteAccountRoute: typeof ApiDeleteAccountRoute
   ApiGenerateBriefRoute: typeof ApiGenerateBriefRoute
   ApiGenerationStatusRoute: typeof ApiGenerationStatusRoute
   ApiHealthRoute: typeof ApiHealthRoute
@@ -238,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privay': {
+      id: '/privay'
+      path: '/privay'
+      fullPath: '/privay'
+      preLoaderRoute: typeof PrivayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/forgot-password': {
       id: '/forgot-password'
       path: '/forgot-password'
@@ -250,6 +296,13 @@ declare module '@tanstack/react-router' {
       path: '/demo'
       fullPath: '/demo'
       preLoaderRoute: typeof DemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/delete-account': {
+      id: '/delete-account'
+      path: '/delete-account'
+      fullPath: '/delete-account'
+      preLoaderRoute: typeof DeleteAccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -306,6 +359,13 @@ declare module '@tanstack/react-router' {
       path: '/api/generate-brief'
       fullPath: '/api/generate-brief'
       preLoaderRoute: typeof ApiGenerateBriefRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/delete-account': {
+      id: '/api/delete-account'
+      path: '/api/delete-account'
+      fullPath: '/api/delete-account'
+      preLoaderRoute: typeof ApiDeleteAccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard': {
@@ -377,9 +437,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
+  DeleteAccountRoute: DeleteAccountRoute,
   DemoRoute: DemoRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  PrivayRoute: PrivayRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiDeleteAccountRoute: ApiDeleteAccountRoute,
   ApiGenerateBriefRoute: ApiGenerateBriefRoute,
   ApiGenerationStatusRoute: ApiGenerationStatusRoute,
   ApiHealthRoute: ApiHealthRoute,

@@ -499,7 +499,8 @@ function Footer() {
             <ul className="mt-3 space-y-2">
               <li><a href="/auth" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Sign in</a></li>
               <li><a href="#" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Contact</a></li>
-              <li><a href="#" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Privacy</a></li>
+              <li><a href="/privay" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Privacy</a></li>
+              <li><Link to="/delete-account" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Delete account</Link></li>
             </ul>
           </div>
         </div>

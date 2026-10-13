@@ -6,12 +6,17 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { LogoLink } from "@/components/Logo";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
-  head: () => ({
-    meta: [{ title: "Sign in — FounderBrief" }],
-  }),
+  head: () =>
+    pageHead({
+      title: "Sign in — FounderBrief",
+      description: "Sign in to your FounderBrief account.",
+      path: "/auth",
+      noindex: true,
+    }),
   component: AuthPage,
 });
 

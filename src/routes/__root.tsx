@@ -12,6 +12,13 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Toaster } from "@/components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  OG_IMAGE,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -78,26 +85,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "FounderBrief — Your weekly brief, built for founders who ship" },
-      { name: "description", content: "FounderBrief distills your strategy, metrics, and priorities into one calm, focused summary — every Monday morning." },
-      { property: "og:title", content: "FounderBrief — Your weekly brief, built for founders who ship" },
-      { property: "og:description", content: "FounderBrief distills your strategy, metrics, and priorities into one calm, focused summary — every Monday morning." },
+      { title: DEFAULT_TITLE },
+      { name: "description", content: DEFAULT_DESCRIPTION },
+      { name: "robots", content: "index, follow" },
+      { name: "theme-color", content: "#0a0a0a" },
+      { property: "og:title", content: DEFAULT_TITLE },
+      { property: "og:description", content: DEFAULT_DESCRIPTION },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "FounderBrief — Your weekly brief, built for founders who ship" },
-      { name: "twitter:description", content: "FounderBrief distills your strategy, metrics, and priorities into one calm, focused summary — every Monday morning." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/kh4Tf3hCPKXaHih8KZC0cbKy3PR2/social-images/social-1781646801887-founderbriefe.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/kh4Tf3hCPKXaHih8KZC0cbKy3PR2/social-images/social-1781646801887-founderbriefe.webp" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:locale", content: "en_US" },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: DEFAULT_TITLE },
+      { name: "twitter:description", content: DEFAULT_DESCRIPTION },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: SITE_URL },
       { rel: "icon", href: "/logo.png", type: "image/png" },
       { rel: "apple-touch-icon", href: "/logo.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" },
     ],
-
   }),
   shellComponent: RootShell,
   component: RootComponent,

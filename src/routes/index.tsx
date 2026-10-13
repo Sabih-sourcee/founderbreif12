@@ -1,16 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { LogoLink } from "@/components/Logo";
+import { JsonLd } from "@/components/JsonLd";
+import {
+  FAQS,
+  faqPageSchema,
+  organizationSchema,
+  pageHead,
+  softwareApplicationSchema,
+  websiteSchema,
+} from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "FounderBrief — Your weekly brief, built for founders who ship" },
-      { name: "description", content: "FounderBrief distills your strategy, metrics, and priorities into one calm, focused summary — every Monday morning." },
-      { property: "og:title", content: "FounderBrief — Your weekly brief" },
-      { property: "og:description", content: "One brief. Every Monday. No noise." },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      title: "FounderBrief — Your weekly brief, built for founders who ship",
+      description:
+        "FounderBrief turns your strategy, metrics, and priorities into one calm weekly brief every Monday — so founders decide instead of drowning in dashboards.",
+      path: "/",
+    }),
   component: Landing,
 });
 
@@ -108,6 +116,14 @@ function Btn({
 function Landing() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
+      <JsonLd
+        data={[
+          organizationSchema(),
+          websiteSchema(),
+          softwareApplicationSchema(),
+          faqPageSchema(),
+        ]}
+      />
       <Nav />
       <main>
         <Hero />
@@ -116,6 +132,7 @@ function Landing() {
         <Features />
         <Testimonials />
         <Pricing />
+        <FaqSection />
         <FinalCTA />
       </main>
       <Footer />
@@ -135,6 +152,8 @@ function Nav() {
         <nav className="hidden md:flex items-center gap-8 text-sm text-[color:var(--subtle-foreground)]">
           <a href="#features" className="hover:text-foreground">Features</a>
           <a href="#pricing" className="hover:text-foreground">Pricing</a>
+          <a href="#faq" className="hover:text-foreground">FAQ</a>
+          <Link to="/about" className="hover:text-foreground">About</Link>
         </nav>
         <div className="flex items-center gap-2">
           <Link
@@ -454,6 +473,32 @@ function Pricing() {
   );
 }
 
+function FaqSection() {
+  return (
+    <section id="faq" className="border-b border-border scroll-mt-24">
+      <Container className="py-24">
+        <span className="eyebrow">FAQ</span>
+        <p className="mt-4 text-3xl md:text-4xl font-bold tracking-[-0.02em] max-w-2xl">
+          Questions founders ask about FounderBrief
+        </p>
+        <p className="mt-3 text-sm text-[color:var(--subtle-foreground)] max-w-xl">
+          Straight answers about what FounderBrief is, who it is for, and how pricing works.
+        </p>
+        <div className="mt-12 space-y-10 max-w-3xl">
+          {FAQS.map((faq) => (
+            <article key={faq.question}>
+              <h2 className="text-lg font-semibold tracking-[-0.01em]">{faq.question}</h2>
+              <p className="mt-3 text-sm leading-[1.75] text-[color:var(--subtle-foreground)]">
+                {faq.answer}
+              </p>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+
 function FinalCTA() {
   return (
     <section className="border-b border-border">
@@ -491,15 +536,17 @@ function Footer() {
             <ul className="mt-3 space-y-2">
               <li><a href="#features" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Features</a></li>
               <li><a href="#pricing" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Pricing</a></li>
-              <li><a href="#" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Changelog</a></li>
+              <li><a href="#faq" className="hover:text-foreground text-[color:var(--subtle-foreground)]">FAQ</a></li>
+              <li><Link to="/demo" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Demo</Link></li>
             </ul>
           </div>
           <div>
             <p className="eyebrow">Company</p>
             <ul className="mt-3 space-y-2">
+              <li><Link to="/about" className="hover:text-foreground text-[color:var(--subtle-foreground)]">About</Link></li>
               <li><a href="/auth" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Sign in</a></li>
-              <li><a href="#" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Contact</a></li>
-              <li><a href="/privay" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Privacy</a></li>
+              <li><a href="mailto:hello@founderbrief.app" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Contact</a></li>
+              <li><Link to="/privacy" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Privacy</Link></li>
               <li><Link to="/delete-account" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Delete account</Link></li>
             </ul>
           </div>

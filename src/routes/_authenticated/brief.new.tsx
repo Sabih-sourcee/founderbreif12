@@ -2,9 +2,15 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useEnsureCurrentBrief } from "@/hooks/use-briefs";
 import { toast } from "sonner";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/_authenticated/brief/new")({
-  head: () => ({ meta: [{ title: "New brief — FounderBrief" }] }),
+  head: () =>
+    pageHead({
+      title: "New brief — FounderBrief",
+      path: "/brief/new",
+      noindex: true,
+    }),
   component: NewBriefRedirect,
 });
 

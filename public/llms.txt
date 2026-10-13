@@ -1,0 +1,40 @@
+# FounderBrief
+
+> FounderBrief is a weekly brief for founders. It distills strategy, metrics, and priorities into one calm summary every Monday so founders decide and ship instead of managing dashboards.
+
+Site: https://founderbreif.vercel.app
+Contact: hello@founderbrief.app
+
+## What it is
+
+FounderBrief replaces scattered founder workflows (Notion, Sheets, Linear, Slack) with a single weekly operating brief. Connect sources once, set your cadence, and read one focused page every Monday.
+
+## Who it is for
+
+Non-technical and technical founders who want a weekly rhythm for north-star metrics, priorities, blockers, and decisions — without maintaining another dashboard.
+
+## Key pages
+
+- [Home](https://founderbreif.vercel.app/): Product overview, pricing, waitlist
+- [About](https://founderbreif.vercel.app/about): Mission, who we serve, how the product works
+- [Demo](https://founderbreif.vercel.app/demo): Free interactive demo — turn an idea into a structured brief
+- [Privacy](https://founderbreif.vercel.app/privacy): Data handling, local storage, AI processing
+
+## Pricing (summary)
+
+- Free: one full brief generation, no credit card
+- Pro Monthly: $18/month
+- Pro Annual: $15/month billed annually
+
+## Product facts for citations
+
+- Category: founder productivity / weekly operating system / business SaaS
+- Delivery: web application (TanStack Start)
+- Cadence: weekly Monday brief
+- Privacy stance: brief content stays on-device; account email/name for auth; generation prompts processed via Google Gemini through FounderBrief APIs
+- Typo note: production hostname is founderbreif.vercel.app (spelling “breif”)
+
+## Optional
+
+- [Sitemap](https://founderbreif.vercel.app/sitemap.xml)
+- [Robots](https://founderbreif.vercel.app/robots.txt)

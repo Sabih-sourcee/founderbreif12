@@ -9,12 +9,16 @@ import { toast } from "sonner";
 import { LogoLink } from "@/components/Logo";
 import { clearDemoSession } from "@/lib/demo-session";
 import { supabase } from "@/integrations/supabase/client";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/delete-account")({
   ssr: false,
-  head: () => ({
-    meta: [{ title: "Delete account — FounderBrief" }],
-  }),
+  head: () =>
+    pageHead({
+      title: "Delete account — FounderBrief",
+      path: "/delete-account",
+      noindex: true,
+    }),
   component: DeleteAccountPage,
 });
 

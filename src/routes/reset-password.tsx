@@ -6,10 +6,16 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { LogoLink } from "@/components/Logo";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/reset-password")({
   ssr: false,
-  head: () => ({ meta: [{ title: "Set new password — FounderBrief" }] }),
+  head: () =>
+    pageHead({
+      title: "Set new password — FounderBrief",
+      path: "/reset-password",
+      noindex: true,
+    }),
   component: ResetPasswordPage,
 });
 

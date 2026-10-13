@@ -5,9 +5,15 @@ import { SECTION_META, type SectionType, formatWeekLabel } from "@/lib/week";
 import { useBlocker } from "@tanstack/react-router";
 import { ArrowLeft, Check, Loader2, Send, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/_authenticated/brief/$id/edit")({
-  head: () => ({ meta: [{ title: "Edit brief — FounderBrief" }] }),
+  head: () =>
+    pageHead({
+      title: "Edit brief — FounderBrief",
+      path: "/brief",
+      noindex: true,
+    }),
   component: EditBrief,
 });
 

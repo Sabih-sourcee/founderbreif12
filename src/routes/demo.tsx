@@ -5,11 +5,16 @@ import { AlertTriangle } from "lucide-react";
 import { DemoFlow } from "@/components/demo/DemoFlow";
 import { LogoLink } from "@/components/Logo";
 import { checkHealth } from "@/lib/demo-api";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/demo")({
-  head: () => ({
-    meta: [{ title: "Try the demo — FounderBrief" }],
-  }),
+  head: () =>
+    pageHead({
+      title: "Try the FounderBrief demo — Free weekly brief generator",
+      description:
+        "Try FounderBrief free: turn a startup idea into a structured technical brief in minutes. No credit card required.",
+      path: "/demo",
+    }),
   component: DemoPage,
 });
 

@@ -6,8 +6,15 @@ import { ArrowUpRight, Plus, FileText, CheckCircle2, Pencil } from "lucide-react
 import { format } from "date-fns";
 import { toast } from "sonner";
 
+import { pageHead } from "@/lib/seo";
+
 export const Route = createFileRoute("/_authenticated/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — FounderBrief" }] }),
+  head: () =>
+    pageHead({
+      title: "Dashboard — FounderBrief",
+      path: "/dashboard",
+      noindex: true,
+    }),
   component: Dashboard,
 });
 

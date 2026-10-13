@@ -3,9 +3,15 @@ import { useState } from "react";
 import { useBriefs } from "@/hooks/use-briefs";
 import { formatWeekLabel } from "@/lib/week";
 import { CheckCircle2, FileText, Plus, ArrowUpRight } from "lucide-react";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/_authenticated/briefs")({
-  head: () => ({ meta: [{ title: "All briefs — FounderBrief" }] }),
+  head: () =>
+    pageHead({
+      title: "All briefs — FounderBrief",
+      path: "/briefs",
+      noindex: true,
+    }),
   component: BriefsListPage,
 });
 

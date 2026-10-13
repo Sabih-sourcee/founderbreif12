@@ -7,10 +7,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
 import { LogoLink } from "@/components/Logo";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/forgot-password")({
   ssr: false,
-  head: () => ({ meta: [{ title: "Reset password — FounderBrief" }] }),
+  head: () =>
+    pageHead({
+      title: "Reset password — FounderBrief",
+      path: "/forgot-password",
+      noindex: true,
+    }),
   component: ForgotPasswordPage,
 });
 

@@ -5,12 +5,16 @@ import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
 import { LogoLink } from "@/components/Logo";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/auth/callback")({
   ssr: false,
-  head: () => ({
-    meta: [{ title: "Confirming — FounderBrief" }],
-  }),
+  head: () =>
+    pageHead({
+      title: "Confirming — FounderBrief",
+      path: "/auth/callback",
+      noindex: true,
+    }),
   component: AuthCallbackPage,
 });
 

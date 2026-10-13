@@ -9,49 +9,33 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as PrivayRouteImport } from './routes/privay'
-import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
-import { Route as DemoRouteImport } from './routes/demo'
-import { Route as DeleteAccountRouteImport } from './routes/delete-account'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
-import { Route as ApiTranscribeVoiceRouteImport } from './routes/api/transcribe-voice'
-import { Route as ApiHealthRouteImport } from './routes/api/health'
-import { Route as ApiGenerationStatusRouteImport } from './routes/api/generation-status'
-import { Route as ApiGenerateBriefRouteImport } from './routes/api/generate-brief'
-import { Route as ApiDeleteAccountRouteImport } from './routes/api/delete-account'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as DeleteAccountRouteImport } from './routes/delete-account'
+import { Route as DemoRouteImport } from './routes/demo'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as PrivayRouteImport } from './routes/privay'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedBriefsRouteImport } from './routes/_authenticated/briefs'
-import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as ApiDeleteAccountRouteImport } from './routes/api/delete-account'
+import { Route as ApiGenerateBriefRouteImport } from './routes/api/generate-brief'
+import { Route as ApiGenerationStatusRouteImport } from './routes/api/generation-status'
+import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as ApiTranscribeVoiceRouteImport } from './routes/api/transcribe-voice'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as AuthenticatedBriefNewRouteImport } from './routes/_authenticated/brief.new'
+import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
 import { Route as AuthenticatedBriefIdEditRouteImport } from './routes/_authenticated/brief.$id.edit'
 
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivayRoute = PrivayRouteImport.update({
-  id: '/privay',
-  path: '/privay',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
-  id: '/forgot-password',
-  path: '/forgot-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoRoute = DemoRouteImport.update({
-  id: '/demo',
-  path: '/demo',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DeleteAccountRoute = DeleteAccountRouteImport.update({
-  id: '/delete-account',
-  path: '/delete-account',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -59,33 +43,44 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const DeleteAccountRoute = DeleteAccountRouteImport.update({
+  id: '/delete-account',
+  path: '/delete-account',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const DemoRoute = DemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthCallbackRoute = AuthCallbackRouteImport.update({
-  id: '/callback',
-  path: '/callback',
-  getParentRoute: () => AuthRoute,
-} as any)
-const ApiTranscribeVoiceRoute = ApiTranscribeVoiceRouteImport.update({
-  id: '/api/transcribe-voice',
-  path: '/api/transcribe-voice',
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiHealthRoute = ApiHealthRouteImport.update({
-  id: '/api/health',
-  path: '/api/health',
+const PrivayRoute = PrivayRouteImport.update({
+  id: '/privay',
+  path: '/privay',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiGenerationStatusRoute = ApiGenerationStatusRouteImport.update({
-  id: '/api/generation-status',
-  path: '/api/generation-status',
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedBriefsRoute = AuthenticatedBriefsRouteImport.update({
+  id: '/briefs',
+  path: '/briefs',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiDeleteAccountRoute = ApiDeleteAccountRouteImport.update({
+  id: '/api/delete-account',
+  path: '/api/delete-account',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiGenerateBriefRoute = ApiGenerateBriefRouteImport.update({
@@ -93,30 +88,35 @@ const ApiGenerateBriefRoute = ApiGenerateBriefRouteImport.update({
   path: '/api/generate-brief',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiDeleteAccountRoute = ApiDeleteAccountRouteImport.update({
-  id: '/api/delete-account',
-  path: '/api/delete-account',
+const ApiGenerationStatusRoute = ApiGenerationStatusRouteImport.update({
+  id: '/api/generation-status',
+  path: '/api/generation-status',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const ApiHealthRoute = ApiHealthRouteImport.update({
+  id: '/api/health',
+  path: '/api/health',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedBriefsRoute = AuthenticatedBriefsRouteImport.update({
-  id: '/briefs',
-  path: '/briefs',
+const ApiTranscribeVoiceRoute = ApiTranscribeVoiceRouteImport.update({
+  id: '/api/transcribe-voice',
+  path: '/api/transcribe-voice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/callback',
+  path: '/callback',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthenticatedBriefNewRoute = AuthenticatedBriefNewRouteImport.update({
+  id: '/brief/new',
+  path: '/brief/new',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiAuthLoginRoute = ApiAuthLoginRouteImport.update({
   id: '/api/auth/login',
   path: '/api/auth/login',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedBriefNewRoute = AuthenticatedBriefNewRouteImport.update({
-  id: '/brief/new',
-  path: '/brief/new',
-  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedBriefIdEditRoute =
   AuthenticatedBriefIdEditRouteImport.update({
@@ -270,46 +270,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privay': {
-      id: '/privay'
-      path: '/privay'
-      fullPath: '/privay'
-      preLoaderRoute: typeof PrivayRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/forgot-password': {
-      id: '/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof ForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo': {
-      id: '/demo'
-      path: '/demo'
-      fullPath: '/demo'
-      preLoaderRoute: typeof DemoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/delete-account': {
-      id: '/delete-account'
-      path: '/delete-account'
-      fullPath: '/delete-account'
-      preLoaderRoute: typeof DeleteAccountRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -319,39 +284,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/callback': {
-      id: '/auth/callback'
-      path: '/callback'
-      fullPath: '/auth/callback'
-      preLoaderRoute: typeof AuthCallbackRouteImport
-      parentRoute: typeof AuthRoute
-    }
-    '/api/transcribe-voice': {
-      id: '/api/transcribe-voice'
-      path: '/api/transcribe-voice'
-      fullPath: '/api/transcribe-voice'
-      preLoaderRoute: typeof ApiTranscribeVoiceRouteImport
+    '/delete-account': {
+      id: '/delete-account'
+      path: '/delete-account'
+      fullPath: '/delete-account'
+      preLoaderRoute: typeof DeleteAccountRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/health': {
-      id: '/api/health'
-      path: '/api/health'
-      fullPath: '/api/health'
-      preLoaderRoute: typeof ApiHealthRouteImport
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/generation-status': {
-      id: '/api/generation-status'
-      path: '/api/generation-status'
-      fullPath: '/api/generation-status'
-      preLoaderRoute: typeof ApiGenerationStatusRouteImport
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privay': {
+      id: '/privay'
+      path: '/privay'
+      fullPath: '/privay'
+      preLoaderRoute: typeof PrivayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/briefs': {
+      id: '/_authenticated/briefs'
+      path: '/briefs'
+      fullPath: '/briefs'
+      preLoaderRoute: typeof AuthenticatedBriefsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/delete-account': {
+      id: '/api/delete-account'
+      path: '/api/delete-account'
+      fullPath: '/api/delete-account'
+      preLoaderRoute: typeof ApiDeleteAccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/generate-brief': {
@@ -361,25 +354,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiGenerateBriefRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/delete-account': {
-      id: '/api/delete-account'
-      path: '/api/delete-account'
-      fullPath: '/api/delete-account'
-      preLoaderRoute: typeof ApiDeleteAccountRouteImport
+    '/api/generation-status': {
+      id: '/api/generation-status'
+      path: '/api/generation-status'
+      fullPath: '/api/generation-status'
+      preLoaderRoute: typeof ApiGenerationStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/api/health': {
+      id: '/api/health'
+      path: '/api/health'
+      fullPath: '/api/health'
+      preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/briefs': {
-      id: '/_authenticated/briefs'
-      path: '/briefs'
-      fullPath: '/briefs'
-      preLoaderRoute: typeof AuthenticatedBriefsRouteImport
+    '/api/transcribe-voice': {
+      id: '/api/transcribe-voice'
+      path: '/api/transcribe-voice'
+      fullPath: '/api/transcribe-voice'
+      preLoaderRoute: typeof ApiTranscribeVoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_authenticated/brief/new': {
+      id: '/_authenticated/brief/new'
+      path: '/brief/new'
+      fullPath: '/brief/new'
+      preLoaderRoute: typeof AuthenticatedBriefNewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/auth/login': {
@@ -388,13 +395,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/auth/login'
       preLoaderRoute: typeof ApiAuthLoginRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/brief/new': {
-      id: '/_authenticated/brief/new'
-      path: '/brief/new'
-      fullPath: '/brief/new'
-      preLoaderRoute: typeof AuthenticatedBriefNewRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/brief/$id/edit': {
       id: '/_authenticated/brief/$id/edit'

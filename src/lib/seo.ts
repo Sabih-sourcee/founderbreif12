@@ -2,13 +2,24 @@
 
 export const SITE_URL = "https://founderbreif.vercel.app";
 export const SITE_NAME = "FounderBrief";
-export const OG_IMAGE =
-  "https://storage.googleapis.com/gpt-engineer-file-uploads/kh4Tf3hCPKXaHih8KZC0cbKy3PR2/social-images/social-1781646801887-founderbriefe.webp";
+
+export function absoluteUrl(path = "/") {
+  if (path.startsWith("http")) return path;
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${SITE_URL}${normalized === "/" ? "" : normalized}` || SITE_URL;
+}
+
+/** 1200×630 PNG served from this site, not an external bucket. */
+export const OG_IMAGE = absoluteUrl("/og.png");
 
 export const DEFAULT_TITLE =
-  "FounderBrief — Your weekly brief, built for founders who ship";
+  "FounderBrief — AI PRD and build plan before you write code";
 export const DEFAULT_DESCRIPTION =
-  "FounderBrief turns your strategy, metrics, and priorities into one calm weekly brief every Monday — so founders decide instead of drowning in dashboards.";
+  "FounderBrief is an AI PRD and build-plan generator. Before you write code, know what you are building and how you will make it. Generate your first PRD free.";
+
+/** CDN cache for public marketing pages. Browser 1h, shared cache 1 day, stale for 7 days. */
+export const PUBLIC_PAGE_CACHE =
+  "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800";
 
 export type PageSeoInput = {
   title?: string;
@@ -18,12 +29,6 @@ export type PageSeoInput = {
   noindex?: boolean;
   type?: "website" | "article";
 };
-
-export function absoluteUrl(path = "/") {
-  if (path.startsWith("http")) return path;
-  const normalized = path.startsWith("/") ? path : `/${path}`;
-  return `${SITE_URL}${normalized === "/" ? "" : normalized}` || SITE_URL;
-}
 
 /** TanStack Router `head()` meta + link helpers */
 export function pageHead({
@@ -65,27 +70,27 @@ export const FAQS = [
   {
     question: "What is FounderBrief?",
     answer:
-      "FounderBrief is a weekly brief for founders. It distills your strategy, metrics, and priorities into one calm, focused summary delivered every Monday morning so you can decide and ship instead of managing dashboards.",
+      "FounderBrief is an AI PRD and build-plan generator. You describe a startup idea and get a product requirements document — problem, users, scope, user stories, requirements, technical constraints, and milestones — before anyone writes code.",
   },
   {
     question: "Who is FounderBrief for?",
     answer:
-      "FounderBrief is built for non-technical and technical founders who want a weekly operating rhythm. If your strategy lives across Notion, Sheets, Linear, and Slack, FounderBrief pulls the signal into one brief.",
+      "FounderBrief is for founders who need to know what they are building and how they will make it. Non-technical founders use it to brief a developer. Technical founders use it to lock scope before the first commit.",
   },
   {
-    question: "How does FounderBrief work?",
+    question: "What is in a FounderBrief PRD?",
     answer:
-      "Connect your sources once, set the metrics and priorities that matter, then read a single brief every Monday. You can also try a free demo that turns a startup idea into a structured technical brief.",
+      "A generated PRD includes a short summary, goals and non-goals, user stories, functional requirements, the core experience, success metrics, technical considerations, and a phased build plan with a complexity and budget range.",
   },
   {
-    question: "Is there a free trial of FounderBrief?",
+    question: "Is the first PRD free?",
     answer:
-      "Yes. The Free plan includes one full brief generation with no credit card required. Paid plans start at $18/month, or $15/month when billed annually.",
+      "Yes. Generate your first PRD free — one full generation, no credit card. Paid plans are $18/month, or $15/month when billed annually, for unlimited generations plus shareable links and PDF export.",
   },
   {
     question: "Does FounderBrief store my ideas on its servers?",
     answer:
-      "Brief content is designed to stay on your device. Account details like email and name are stored to operate the service. When you generate a brief, prompts are processed via Google Gemini through our API and are not permanently stored afterward.",
+      "Brief content is designed to stay on your device. Account details like email and name are stored to operate the service. When you generate a PRD, prompts are processed via Google Gemini through our API and are not permanently stored afterward.",
   },
 ] as const;
 
@@ -119,9 +124,18 @@ export function softwareApplicationSchema() {
     "@type": "SoftwareApplication",
     name: SITE_NAME,
     applicationCategory: "BusinessApplication",
+    applicationSubCategory: "AI PRD and build plan generator",
     operatingSystem: "Web",
     url: SITE_URL,
-    description: DEFAULT_DESCRIPTION,
+    description:
+      "AI product-requirements and build-plan generator. Describe a startup idea and get a PRD with scope, user stories, requirements, technical constraints, and milestones before you write code.",
+    featureList: [
+      "AI PRD generation",
+      "User stories and functional requirements",
+      "Technical constraints and build plan",
+      "Milestones and complexity estimate",
+      "Markdown and PDF export",
+    ],
     offers: [
       {
         "@type": "Offer",
@@ -168,7 +182,7 @@ export function aboutPageSchema() {
     name: `About ${SITE_NAME}`,
     url: absoluteUrl("/about"),
     description:
-      "FounderBrief helps founders replace scattered dashboards with one weekly brief — a calm Monday ritual for strategy, metrics, and priorities.",
+      "FounderBrief is an AI PRD and build-plan generator that helps founders decide what they are building and how they will make it before writing code.",
     mainEntity: organizationSchema(),
   };
 }

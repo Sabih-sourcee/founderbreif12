@@ -4,6 +4,8 @@ Allow: /
 Allow: /about
 Allow: /privacy
 Allow: /demo
+Allow: /guides
+Allow: /llms.txt
 Disallow: /auth
 Disallow: /auth/
 Disallow: /dashboard

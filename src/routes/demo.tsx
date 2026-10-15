@@ -10,9 +10,9 @@ import { pageHead } from "@/lib/seo";
 export const Route = createFileRoute("/demo")({
   head: () =>
     pageHead({
-      title: "Try the FounderBrief demo — Free weekly brief generator",
+      title: "Generate your first PRD free — FounderBrief",
       description:
-        "Try FounderBrief free: turn a startup idea into a structured technical brief in minutes. No credit card required.",
+        "Describe a startup idea and get an AI PRD and build plan. Scope, user stories, requirements, and milestones. No credit card for the first one.",
       path: "/demo",
     }),
   component: DemoPage,

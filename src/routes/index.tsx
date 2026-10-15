@@ -7,16 +7,18 @@ import {
   faqPageSchema,
   organizationSchema,
   pageHead,
+  PUBLIC_PAGE_CACHE,
   softwareApplicationSchema,
   websiteSchema,
 } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
+  headers: () => ({ "Cache-Control": PUBLIC_PAGE_CACHE }),
   head: () =>
     pageHead({
-      title: "FounderBrief — Your weekly brief, built for founders who ship",
+      title: "FounderBrief — AI PRD and build plan before you write code",
       description:
-        "FounderBrief turns your strategy, metrics, and priorities into one calm weekly brief every Monday — so founders decide instead of drowning in dashboards.",
+        "FounderBrief is an AI PRD and build-plan generator. Before you write code, know what you are building and how you will make it. Generate your first PRD free.",
       path: "/",
     }),
   component: Landing,
@@ -153,18 +155,17 @@ function Nav() {
           <a href="#features" className="hover:text-foreground">Features</a>
           <a href="#pricing" className="hover:text-foreground">Pricing</a>
           <a href="#faq" className="hover:text-foreground">FAQ</a>
+          <Link to="/guides" className="hover:text-foreground">Guides</Link>
           <Link to="/about" className="hover:text-foreground">About</Link>
         </nav>
         <div className="flex items-center gap-2">
           <Link
             to="/demo"
-            className="hidden h-10 items-center justify-center rounded-[8px] border border-border bg-transparent px-4 text-sm font-semibold text-foreground transition-colors hover:bg-surface sm:inline-flex"
+            className="inline-flex h-10 items-center justify-center rounded-[8px] bg-accent px-3 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent/90 sm:px-4"
           >
-            Try demo
+            <span className="sm:hidden">Free PRD</span>
+            <span className="hidden sm:inline">Generate your first PRD free</span>
           </Link>
-          <Btn variant="primary" href="#waitlist" className="h-10 px-4">
-            Join waitlist
-          </Btn>
         </div>
       </Container>
     </header>
@@ -174,31 +175,31 @@ function Nav() {
 function Hero() {
   return (
     <section className="border-b border-border">
-      <Container className="grid md:grid-cols-12 gap-12 py-20 md:py-28 items-center">
+      <Container className="grid md:grid-cols-12 gap-12 py-12 md:py-16 items-center">
         <div className="md:col-span-7">
-          <span className="eyebrow">For non-technical founders</span>
-          <h1 className="mt-5 text-[40px] md:text-[56px] font-bold tracking-[-0.02em] leading-[1.05]">
-            Your weekly brief.<br />Built for founders who ship.
+          <span className="eyebrow">AI PRD and build plan</span>
+          <h1 className="mt-4 text-[32px] md:text-[44px] font-bold tracking-[-0.02em] leading-[1.08]">
+            Before writing a single line of code, know what you are building and how you will make it.
           </h1>
-          <p className="mt-6 max-w-xl text-base md:text-[17px] leading-[1.65] text-[color:var(--subtle-foreground)]">
-            FounderBrief distills your strategy, metrics, and priorities into one calm, focused summary — every Monday morning.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
               to="/demo"
               className="inline-flex h-12 items-center justify-center rounded-[8px] bg-accent px-6 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent/90"
             >
-              Try free demo
+              Generate your first PRD free
             </Link>
-            <Btn variant="secondary" href="#features">
-              See features
+            <Btn variant="secondary" href="#how">
+              See how it works
             </Btn>
           </div>
-          <div id="waitlist" className="mt-8 scroll-mt-24">
+          <p className="mt-5 max-w-xl text-base leading-[1.65] text-[color:var(--subtle-foreground)]">
+            FounderBrief turns a startup idea into a PRD and a build plan: scope, user stories, requirements, and the technical path.
+          </p>
+          <div id="waitlist" className="mt-6 scroll-mt-24">
             <WaitlistForm variant="inline" showName submitLabel="Join the waitlist" />
           </div>
           <p className="mt-4 text-[11px] text-[color:var(--muted-foreground)]">
-            One free demo · Paid plans from $15/mo · No card required to join
+            First PRD free · Paid plans from $15/mo · No card required
           </p>
           <p className="mt-6 text-xs font-semibold text-[color:var(--muted-foreground)]">
             Join 400+ founders on the waitlist
@@ -206,51 +207,37 @@ function Hero() {
         </div>
 
         <div className="md:col-span-5">
-          <BriefMockup />
+          <PrdMockup />
         </div>
       </Container>
     </section>
   );
 }
 
-function BriefMockup() {
+function PrdMockup() {
   return (
     <div className="rounded-2xl border border-border bg-surface p-6">
       <div className="flex items-center justify-between pb-4 border-b border-border">
         <div>
-          <p className="eyebrow">Monday Brief</p>
-          <p className="text-sm font-semibold mt-1">Week 41 · Oct 14</p>
+          <p className="eyebrow">Product brief</p>
+          <p className="text-sm font-semibold mt-1">Laundry delivery MVP</p>
         </div>
         <span className="inline-flex items-center rounded-[12px] bg-border/70 px-2.5 py-1 text-[10px] font-semibold tracking-wider uppercase">
-          Draft → Sent
+          PRD
         </span>
       </div>
 
       <div className="mt-5">
-        <p className="eyebrow">North Star</p>
+        <p className="eyebrow">Problem</p>
         <p className="mt-2 text-[15px] leading-[1.55]">
-          Reach 1,000 weekly active teams by Q1. Currently at <span className="font-semibold">612</span>.
+          Customers and riders coordinate pickups in chat. The first version needs scheduling, tracking, and payment.
         </p>
       </div>
 
-      <div className="mt-5 grid grid-cols-3 gap-3">
-        {[
-          { l: "MRR", v: "$8,420", d: "+12%" },
-          { l: "Active", v: "612", d: "+38" },
-          { l: "Churn", v: "1.2%", d: "−0.3" },
-        ].map((m) => (
-          <div key={m.l} className="rounded-lg border border-border bg-background p-3">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-[color:var(--muted-foreground)]">{m.l}</p>
-            <p className="mt-1 text-lg font-bold tracking-[-0.01em]">{m.v}</p>
-            <p className="text-xs text-[color:var(--success)] font-semibold">{m.d}</p>
-          </div>
-        ))}
-      </div>
-
       <div className="mt-5">
-        <p className="eyebrow">This Week's 3</p>
+        <p className="eyebrow">In scope</p>
         <ul className="mt-2 space-y-2 text-[14px]">
-          {["Ship onboarding rewrite", "Interview 5 churned users", "Close pricing experiment"].map((t, i) => (
+          {["Request a pickup", "Track the rider", "Pay in the app"].map((t, i) => (
             <li key={t} className="flex gap-3">
               <span className="mt-0.5 text-[color:var(--muted-foreground)] font-semibold text-xs w-4">0{i + 1}</span>
               <span>{t}</span>
@@ -258,20 +245,27 @@ function BriefMockup() {
           ))}
         </ul>
       </div>
+
+      <div className="mt-5 rounded-lg border border-border bg-background p-3">
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-[color:var(--muted-foreground)]">Build plan</p>
+        <p className="mt-1 text-sm font-semibold">Phase 1 · 3 weeks</p>
+        <p className="text-xs text-[color:var(--subtle-foreground)]">Auth, orders, and payments. Admin tools wait.</p>
+      </div>
     </div>
   );
 }
 
 function ProblemStrip() {
   const items = [
-    { icon: Icons.Layers, t: "Too many tools", b: "Notion, Sheets, Linear, Slack. Your strategy is scattered across ten tabs." },
-    { icon: Icons.Calendar, t: "No weekly rhythm", b: "Without a cadence, weeks blur. You react instead of decide." },
-    { icon: Icons.Brain, t: "Strategy stays in your head", b: "If it isn't written down, it isn't shared — and it isn't real." },
+    { icon: Icons.Layers, t: "Code before a spec", b: "You start building while the user, the outcome, and the non-goals are still a guess." },
+    { icon: Icons.Calendar, t: "Scope that will not ship", b: "The first version tries to do everything, so it never does the one job that matters." },
+    { icon: Icons.Brain, t: "A stack chosen too early", b: "Tools get picked before anyone has written what the product has to do." },
   ];
   return (
     <section className="bg-surface border-b border-border">
       <Container className="py-20">
-        <div className="grid md:grid-cols-3 gap-10 md:gap-16">
+        <h2 className="text-2xl font-bold tracking-[-0.02em] md:text-3xl">What goes wrong when you build first</h2>
+        <div className="mt-12 grid md:grid-cols-3 gap-10 md:gap-16">
           {items.map(({ icon: I, t, b }) => (
             <div key={t}>
               <I />
@@ -287,16 +281,16 @@ function ProblemStrip() {
 
 function HowItWorks() {
   const steps = [
-    { t: "Connect your sources", d: "Link the metrics, docs, and tools you already use. Five minutes, once." },
-    { t: "Set your weekly cadence", d: "Pick what matters: north star, KPIs, priorities, blockers, decisions." },
-    { t: "Read it every Monday", d: "Open your inbox to one calm brief. Decide. Close the tab. Get to work." },
+    { t: "Describe the idea", d: "Write the product in plain language. A few sentences is enough to start." },
+    { t: "Answer a few questions", d: "Platform, users, integrations, and timeline — the choices that change the plan." },
+    { t: "Get a PRD and build plan", d: "Scope, stories, requirements, technical notes, and milestones you can hand to a builder." },
   ];
   return (
-    <section className="border-b border-border">
+    <section id="how" className="border-b border-border scroll-mt-24">
       <Container className="py-24">
         <span className="eyebrow">How it works</span>
         <h2 className="mt-4 text-3xl md:text-4xl font-bold tracking-[-0.02em] max-w-2xl">
-          Set it once. Read it every Monday.
+          From an idea to a plan you can build.
         </h2>
         <div className="mt-14 grid md:grid-cols-3 gap-10 md:gap-12">
           {steps.map((s, i) => (
@@ -316,19 +310,19 @@ function HowItWorks() {
 
 function Features() {
   const items = [
-    { icon: Icons.Inbox, t: "Weekly Brief", d: "One email, one page. Strategy, metrics, and priorities — nothing else." },
-    { icon: Icons.Focus, t: "Focus Mode", d: "Hide the noise. See only this week's three priorities while you work." },
-    { icon: Icons.Chart, t: "Metrics Snapshot", d: "Live numbers from the tools you already use. No dashboards to maintain." },
-    { icon: Icons.Compass, t: "Priority Engine", d: "Decide what matters. Everything else waits until next Monday." },
-    { icon: Icons.Clock, t: "Async-friendly", d: "Share read-only briefs with investors, advisors, and your team." },
-    { icon: Icons.Share, t: "One-click Share", d: "Public links, PDF export, or send straight to your investor update." },
+    { icon: Icons.Inbox, t: "PRD in one pass", d: "Problem, users, scope, and non-goals in a document you can share." },
+    { icon: Icons.Focus, t: "User stories", d: "The jobs the first version must do, written so a builder can start." },
+    { icon: Icons.Chart, t: "Success metrics", d: "What would prove the product works, before you instrument anything." },
+    { icon: Icons.Compass, t: "Technical plan", d: "Constraints, integrations, and risks tied to the scope you just wrote." },
+    { icon: Icons.Clock, t: "Milestones", d: "A phased build plan: what ships first, and what waits." },
+    { icon: Icons.Share, t: "Export", d: "Markdown on the free plan. Links and PDF when you need to send it." },
   ];
   return (
     <section id="features" className="bg-surface border-b border-border">
       <Container className="py-24">
         <span className="eyebrow">Features</span>
         <h2 className="mt-4 text-3xl md:text-4xl font-bold tracking-[-0.02em] max-w-2xl">
-          The smallest set of tools that gets you a clear week.
+          Everything you need before the first commit.
         </h2>
         <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map(({ icon: I, t, d }) => (
@@ -346,16 +340,16 @@ function Features() {
 
 function Testimonials() {
   const quotes = [
-    { q: "FounderBrief replaced four tabs and a recurring calendar event. Monday finally feels designed.", n: "Maya Okafor", r: "Founder, Ledgerline" },
-    { q: "I stopped writing investor updates from scratch. The brief is the update.", n: "Daniel Reyes", r: "CEO, Northpath" },
-    { q: "It's the only product where I read every word, every week. Quiet and useful.", n: "Priya Shah", r: "Founder, Quill & Co." },
+    { q: "We had a deck and a group chat. FounderBrief gave us a PRD we could actually build from.", n: "Maya Okafor", r: "Founder, Ledgerline" },
+    { q: "The build plan told me what to hire for and what to leave out of the first version.", n: "Daniel Reyes", r: "CEO, Northpath" },
+    { q: "I stopped starting in the editor. The brief made the scope obvious.", n: "Priya Shah", r: "Founder, Quill & Co." },
   ];
   return (
     <section className="border-b border-border">
       <Container className="py-24">
         <span className="eyebrow">From founders</span>
         <h2 className="mt-4 text-3xl md:text-4xl font-bold tracking-[-0.02em] max-w-2xl">
-          A quieter way to run a company.
+          A plan before the first line of code.
         </h2>
         <div className="mt-12 grid md:grid-cols-3 gap-4">
           {quotes.map((t) => (
@@ -381,10 +375,10 @@ function Pricing() {
       name: "Free",
       price: "$0",
       per: "to start",
-      desc: "Try FounderBrief with one full brief generation — no card required.",
+      desc: "One full PRD and build plan. No card required.",
       features: [
-        "1 brief generation",
-        "North star, metrics & priorities",
+        "1 PRD generation",
+        "Scope, stories, and requirements",
         "Markdown export",
         "Personal use",
       ],
@@ -398,10 +392,10 @@ function Pricing() {
       per: "per month",
       desc: "Full access, billed month to month. Cancel anytime.",
       features: [
-        "Unlimited brief generations",
-        "Weekly email brief",
-        "Shareable links & PDF",
-        "Investor update mode",
+        "Unlimited PRD generations",
+        "Build plan and milestones",
+        "Shareable links and PDF",
+        "Revise as the idea changes",
       ],
       cta: "Join waitlist",
       variant: "secondary" as const,
@@ -428,11 +422,11 @@ function Pricing() {
     <section id="pricing" className="bg-surface border-b border-border">
       <Container className="py-24">
         <span className="eyebrow">Pricing</span>
-        <h2 className="mt-4 text-3xl md:text-4xl font-bold tracking-[-0.02em] max-w-2xl">
-          Simple, honest pricing.
+        <h2 className="mt-4 max-w-2xl text-3xl font-bold tracking-[-0.02em] md:text-4xl">
+          Simple, honest pricing
         </h2>
         <p className="mt-3 text-sm text-[color:var(--subtle-foreground)] max-w-xl">
-          One generation free. Then $18/month, or $15/month when billed annually.
+          One PRD free. Then $18/month, or $15/month when billed annually.
         </p>
         <div className="mt-12 grid md:grid-cols-3 gap-4">
           {tiers.map((t) => (
@@ -478,16 +472,16 @@ function FaqSection() {
     <section id="faq" className="border-b border-border scroll-mt-24">
       <Container className="py-24">
         <span className="eyebrow">FAQ</span>
-        <p className="mt-4 text-3xl md:text-4xl font-bold tracking-[-0.02em] max-w-2xl">
+        <h2 className="mt-4 max-w-2xl text-3xl font-bold tracking-[-0.02em] md:text-4xl">
           Questions founders ask about FounderBrief
-        </p>
+        </h2>
         <p className="mt-3 text-sm text-[color:var(--subtle-foreground)] max-w-xl">
-          Straight answers about what FounderBrief is, who it is for, and how pricing works.
+          Straight answers about the PRD, who it is for, and how pricing works.
         </p>
         <div className="mt-12 space-y-10 max-w-3xl">
           {FAQS.map((faq) => (
             <article key={faq.question}>
-              <h2 className="text-lg font-semibold tracking-[-0.01em]">{faq.question}</h2>
+              <h3 className="text-lg font-semibold tracking-[-0.01em]">{faq.question}</h3>
               <p className="mt-3 text-sm leading-[1.75] text-[color:var(--subtle-foreground)]">
                 {faq.answer}
               </p>
@@ -504,11 +498,19 @@ function FinalCTA() {
     <section className="border-b border-border">
       <Container className="py-28 text-center">
         <h2 className="text-3xl md:text-5xl font-bold tracking-[-0.02em] max-w-2xl mx-auto">
-          One brief. Every Monday. No noise.
+          Know the product before you write it.
         </h2>
         <p className="mt-4 text-sm text-[color:var(--subtle-foreground)] max-w-md mx-auto">
-          Join the waitlist and we&apos;ll invite you as soon as a spot opens.
+          Generate a PRD and a build plan from the idea you already have.
         </p>
+        <div className="mt-8">
+          <Link
+            to="/demo"
+            className="inline-flex h-12 items-center justify-center rounded-[8px] bg-accent px-6 text-sm font-semibold text-accent-foreground hover:bg-accent/90"
+          >
+            Generate your first PRD free
+          </Link>
+        </div>
         <div className="mt-10 flex justify-center px-2">
           <WaitlistForm variant="stacked" submitLabel="Get early access" />
         </div>
@@ -527,7 +529,7 @@ function Footer() {
         <div>
           <LogoLink to="/" size="sm" />
           <p className="mt-2 text-sm text-[color:var(--muted-foreground)] max-w-xs leading-[1.65]">
-            A weekly brief for founders who'd rather decide than dashboard.
+            An AI PRD and build plan, before you write a line of code.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-6 text-sm">
@@ -537,7 +539,8 @@ function Footer() {
               <li><a href="#features" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Features</a></li>
               <li><a href="#pricing" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Pricing</a></li>
               <li><a href="#faq" className="hover:text-foreground text-[color:var(--subtle-foreground)]">FAQ</a></li>
-              <li><Link to="/demo" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Demo</Link></li>
+              <li><Link to="/demo" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Generate a PRD</Link></li>
+              <li><Link to="/guides" className="hover:text-foreground text-[color:var(--subtle-foreground)]">Guides</Link></li>
             </ul>
           </div>
           <div>

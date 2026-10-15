@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { LogoLink } from "@/components/Logo";
-import { pageHead } from "@/lib/seo";
+import { pageHead, PUBLIC_PAGE_CACHE } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacy")({
+  headers: () => ({ "Cache-Control": PUBLIC_PAGE_CACHE }),
   head: () =>
     pageHead({
       title: "Privacy Policy — FounderBrief",

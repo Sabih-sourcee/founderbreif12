@@ -56,10 +56,10 @@ function AuthPage() {
         <LogoLink to="/" size="md" className="mb-0" />
         <div>
           <h1 className="text-3xl font-bold tracking-[-0.02em] max-w-md">
-            One brief.<br />Every Monday.<br />No noise.
+            Know what you are building before you write it.
           </h1>
           <p className="mt-4 text-sm text-[color:var(--subtle-foreground)] max-w-md leading-[1.65]">
-            A quiet weekly ritual for founders who'd rather decide than dashboard.
+            An AI PRD and build plan, so the first version has a scope.
           </p>
         </div>
         <p className="text-xs text-[color:var(--muted-foreground)]">© {new Date().getFullYear()} FounderBrief</p>
@@ -100,7 +100,7 @@ function AuthPage() {
                 {mode === "signin" ? "Welcome back" : "Create your account"}
               </h2>
               <p className="mt-2 text-sm text-[color:var(--subtle-foreground)]">
-                {mode === "signin" ? "Sign in to read this week's brief." : "Start your weekly brief practice."}
+                {mode === "signin" ? "Sign in to your PRDs." : "Create an account to keep your PRDs."}
               </p>
 
               {mode === "signin" ? (

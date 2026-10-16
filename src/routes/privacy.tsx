@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { JsonLd } from "@/components/JsonLd";
 import { LogoLink } from "@/components/Logo";
-import { pageHead, PUBLIC_PAGE_CACHE } from "@/lib/seo";
+import { pageHead, PUBLIC_PAGE_CACHE, webPageSchema } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacy")({
   headers: () => ({ "Cache-Control": PUBLIC_PAGE_CACHE }),
@@ -18,6 +19,13 @@ export const Route = createFileRoute("/privacy")({
 function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
+      <JsonLd
+        data={webPageSchema(
+          "Privacy Policy — FounderBrief",
+          "/privacy",
+          "How FounderBrief handles your data — local storage, account details, and AI processing with Google Gemini.",
+        )}
+      />
       <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-6">
           <LogoLink to="/" size="sm" />

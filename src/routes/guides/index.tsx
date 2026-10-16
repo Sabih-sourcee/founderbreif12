@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { JsonLd } from "@/components/JsonLd";
 import { LogoLink } from "@/components/Logo";
 import { GUIDES } from "@/lib/guides";
-import { pageHead, PUBLIC_PAGE_CACHE } from "@/lib/seo";
+import { breadcrumbListSchema, itemListSchema, pageHead, PUBLIC_PAGE_CACHE } from "@/lib/seo";
 
 export const Route = createFileRoute("/guides/")({
   headers: () => ({ "Cache-Control": PUBLIC_PAGE_CACHE }),
@@ -19,6 +20,21 @@ export const Route = createFileRoute("/guides/")({
 function GuidesIndex() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
+      <JsonLd
+        data={[
+          breadcrumbListSchema([
+            { name: "Home", path: "/" },
+            { name: "Guides", path: "/guides" },
+          ]),
+          itemListSchema(
+            "FounderBrief guides",
+            GUIDES.map((guide) => ({
+              name: guide.title,
+              path: `/guides/${guide.slug}`,
+            })),
+          ),
+        ]}
+      />
       <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-6">
           <LogoLink to="/" size="sm" />

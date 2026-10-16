@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import { AlertTriangle } from "lucide-react";
 
 import { DemoFlow } from "@/components/demo/DemoFlow";
+import { JsonLd } from "@/components/JsonLd";
 import { LogoLink } from "@/components/Logo";
 import { checkHealth } from "@/lib/demo-api";
-import { pageHead } from "@/lib/seo";
+import { pageHead, softwareApplicationSchema } from "@/lib/seo";
 
 export const Route = createFileRoute("/demo")({
   head: () =>
@@ -48,6 +49,29 @@ function DemoPage() {
       )}
 
       <main>
+        <section className="mx-auto max-w-2xl px-6 pb-2 pt-10 text-left">
+          <p className="text-sm leading-[1.75] text-[color:var(--subtle-foreground)]">
+            FounderBrief&apos;s demo turns a startup idea into a product requirements document and a
+            build plan before you write code. Describe the product in plain language, then answer a
+            few questions about who it is for, which platforms it runs on, how people sign in, and
+            what it must integrate with. Those answers are what change the scope.
+          </p>
+          <p className="mt-3 text-sm leading-[1.75] text-[color:var(--subtle-foreground)]">
+            You get a PRD a builder can start from: a short summary, goals and non-goals, user
+            stories, functional requirements, the core experience, success metrics, technical
+            constraints, and a phased plan with milestones. The point is to show what the first
+            version is, and what it is not, so the first stretch of work stays small enough to
+            finish. Read it as a draft you will cut, not as a promise to build every line.
+          </p>
+          <p className="mt-3 text-sm leading-[1.75] text-[color:var(--subtle-foreground)]">
+            The first generation is free and does not ask for a card. Delete anything you cannot
+            defend, then open an editor or send the plan to the person who will build it. Paid
+            plans add unlimited generations, shareable links, and PDF export when the document
+            needs to leave your machine. The demo does not replace talking to a real user. It makes
+            the idea specific enough that the conversation, and the build, can start.
+          </p>
+        </section>
+        <JsonLd data={softwareApplicationSchema()} />
         <DemoFlow />
       </main>
     </div>

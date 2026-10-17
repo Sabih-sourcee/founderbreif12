@@ -19,6 +19,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PrivayRouteImport } from './routes/privay'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedBriefsRouteImport } from './routes/_authenticated/briefs'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ApiDeleteAccountRouteImport } from './routes/api/delete-account'
@@ -80,6 +81,11 @@ const PrivayRoute = PrivayRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedBriefsRoute = AuthenticatedBriefsRouteImport.update({
@@ -159,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/privay': typeof PrivayRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/briefs': typeof AuthenticatedBriefsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/delete-account': typeof ApiDeleteAccountRoute
@@ -183,6 +190,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/privay': typeof PrivayRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/briefs': typeof AuthenticatedBriefsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/delete-account': typeof ApiDeleteAccountRoute
@@ -209,6 +217,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/privay': typeof PrivayRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/briefs': typeof AuthenticatedBriefsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/api/delete-account': typeof ApiDeleteAccountRoute
@@ -235,6 +244,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/privay'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/briefs'
     | '/dashboard'
     | '/api/delete-account'
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/privay'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/briefs'
     | '/dashboard'
     | '/api/delete-account'
@@ -284,6 +295,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/privay'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/_authenticated/briefs'
     | '/_authenticated/dashboard'
     | '/api/delete-account'
@@ -310,6 +322,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   PrivayRoute: typeof PrivayRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiDeleteAccountRoute: typeof ApiDeleteAccountRoute
   ApiGenerateBriefRoute: typeof ApiGenerateBriefRoute
   ApiGenerationStatusRoute: typeof ApiGenerationStatusRoute
@@ -390,6 +403,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/briefs': {
@@ -524,6 +544,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   PrivayRoute: PrivayRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiDeleteAccountRoute: ApiDeleteAccountRoute,
   ApiGenerateBriefRoute: ApiGenerateBriefRoute,
   ApiGenerationStatusRoute: ApiGenerationStatusRoute,

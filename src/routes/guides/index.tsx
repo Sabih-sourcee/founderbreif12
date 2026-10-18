@@ -11,7 +11,7 @@ export const Route = createFileRoute("/guides/")({
     pageHead({
       title: "Guides — PRDs, MVPs, and build plans — FounderBrief",
       description:
-        "Practical guides on writing a startup PRD, using an AI PRD generator, validating an idea, planning an MVP, and choosing a SaaS stack.",
+        "Practical guides on startup PRDs, briefing a developer, specs for AI coding tools, and how a PRD differs from a spec and a roadmap.",
       path: "/guides",
     }),
   component: GuidesIndex,
@@ -54,7 +54,8 @@ function GuidesIndex() {
           Know what you are building before you write code
         </h1>
         <p className="mt-4 text-base leading-[1.7] text-[color:var(--subtle-foreground)]">
-          Short guides for founders writing a PRD, checking an idea, and planning the first version.
+          Short guides for founders writing a PRD, briefing a developer, prompting a coding tool,
+          and planning the first version.
         </p>
         <ul className="mt-12 space-y-4">
           {GUIDES.map((guide) => (

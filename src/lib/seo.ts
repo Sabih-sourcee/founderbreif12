@@ -12,8 +12,7 @@ export function absoluteUrl(path = "/") {
 /** 1200×630 PNG served from this site, not an external bucket. */
 export const OG_IMAGE = absoluteUrl("/og.png");
 
-export const DEFAULT_TITLE =
-  "FounderBrief — AI PRD and build plan before you write code";
+export const DEFAULT_TITLE = "FounderBrief — AI PRD and build plan before you write code";
 export const DEFAULT_DESCRIPTION =
   "FounderBrief is an AI PRD and build-plan generator. Before you write code, know what you are building and how you will make it. Generate your first PRD free.";
 
@@ -188,10 +187,7 @@ export function breadcrumbListSchema(items: readonly { name: string; path: strin
   };
 }
 
-export function itemListSchema(
-  name: string,
-  items: readonly { name: string; path: string }[],
-) {
+export function itemListSchema(name: string, items: readonly { name: string; path: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -213,6 +209,33 @@ export function webPageSchema(name: string, path: string, description: string) {
     url: absoluteUrl(path),
     description,
     isPartOf: { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
+  };
+}
+
+export function articleSchema(input: {
+  title: string;
+  description: string;
+  path: string;
+  datePublished: string;
+}) {
+  const url = absoluteUrl(input.path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: input.title,
+    description: input.description,
+    datePublished: input.datePublished,
+    dateModified: input.datePublished,
+    inLanguage: "en",
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") },
+    },
+    image: [OG_IMAGE],
   };
 }
 

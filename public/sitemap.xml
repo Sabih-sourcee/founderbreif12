@@ -20,7 +20,7 @@
   </url>
   <url>
     <loc>https://founderbreif.vercel.app/guides</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -51,6 +51,36 @@
   <url>
     <loc>https://founderbreif.vercel.app/guides/tech-stack-for-saas-mvp</loc>
     <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://founderbreif.vercel.app/guides/prd-template-for-startups</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://founderbreif.vercel.app/guides/prd-for-cursor-lovable-bolt</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://founderbreif.vercel.app/guides/how-to-brief-a-developer-non-technical-founder</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://founderbreif.vercel.app/guides/prd-vs-spec-vs-roadmap</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://founderbreif.vercel.app/guides/chatprd-alternatives</loc>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

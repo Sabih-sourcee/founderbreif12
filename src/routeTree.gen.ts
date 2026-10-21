@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as R332021a187e8d32643c66d9c79f3c394DottxtRouteImport } from './routes/332021a187e8d32643c66d9c79f3c394[.]txt'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -39,6 +40,12 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const R332021a187e8d32643c66d9c79f3c394DottxtRoute =
+  R332021a187e8d32643c66d9c79f3c394DottxtRouteImport.update({
+    id: '/332021a187e8d32643c66d9c79f3c394.txt',
+    path: '/332021a187e8d32643c66d9c79f3c394.txt',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
@@ -157,6 +164,7 @@ const AuthenticatedBriefIdEditRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/332021a187e8d32643c66d9c79f3c394.txt': typeof R332021a187e8d32643c66d9c79f3c394DottxtRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRouteWithChildren
   '/delete-account': typeof DeleteAccountRoute
@@ -182,6 +190,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/332021a187e8d32643c66d9c79f3c394.txt': typeof R332021a187e8d32643c66d9c79f3c394DottxtRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRouteWithChildren
   '/delete-account': typeof DeleteAccountRoute
@@ -209,6 +218,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/332021a187e8d32643c66d9c79f3c394.txt': typeof R332021a187e8d32643c66d9c79f3c394DottxtRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRouteWithChildren
   '/delete-account': typeof DeleteAccountRoute
@@ -236,6 +246,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/332021a187e8d32643c66d9c79f3c394.txt'
     | '/about'
     | '/auth'
     | '/delete-account'
@@ -261,6 +272,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/332021a187e8d32643c66d9c79f3c394.txt'
     | '/about'
     | '/auth'
     | '/delete-account'
@@ -287,6 +299,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/332021a187e8d32643c66d9c79f3c394.txt'
     | '/about'
     | '/auth'
     | '/delete-account'
@@ -314,6 +327,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  R332021a187e8d32643c66d9c79f3c394DottxtRoute: typeof R332021a187e8d32643c66d9c79f3c394DottxtRoute
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRouteWithChildren
   DeleteAccountRoute: typeof DeleteAccountRoute
@@ -340,6 +354,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/332021a187e8d32643c66d9c79f3c394.txt': {
+      id: '/332021a187e8d32643c66d9c79f3c394.txt'
+      path: '/332021a187e8d32643c66d9c79f3c394.txt'
+      fullPath: '/332021a187e8d32643c66d9c79f3c394.txt'
+      preLoaderRoute: typeof R332021a187e8d32643c66d9c79f3c394DottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -536,6 +557,8 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  R332021a187e8d32643c66d9c79f3c394DottxtRoute:
+    R332021a187e8d32643c66d9c79f3c394DottxtRoute,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRouteWithChildren,
   DeleteAccountRoute: DeleteAccountRoute,

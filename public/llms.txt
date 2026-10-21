@@ -17,12 +17,17 @@ Founders who need the plan before the code. Non-technical founders use it to bri
 
 - [Home](https://founderbreif.vercel.app/): Product, pricing, and the free PRD
 - [Generate a PRD](https://founderbreif.vercel.app/demo): Free first generation — idea in, PRD and build plan out
-- [Guides](https://founderbreif.vercel.app/guides): PRD, validation, MVP, and stack guides
+- [Guides](https://founderbreif.vercel.app/guides): PRD, validation, MVP, stack, briefing, and spec guides
 - [How to write a PRD for a startup](https://founderbreif.vercel.app/guides/how-to-write-a-prd-for-a-startup)
 - [AI PRD generator](https://founderbreif.vercel.app/guides/ai-prd-generator)
 - [Validate a startup idea before building](https://founderbreif.vercel.app/guides/validate-startup-idea-before-building)
 - [MVP planning checklist](https://founderbreif.vercel.app/guides/mvp-planning-checklist)
 - [Tech stack for a SaaS MVP](https://founderbreif.vercel.app/guides/tech-stack-for-saas-mvp)
+- [PRD template for startups](https://founderbreif.vercel.app/guides/prd-template-for-startups)
+- [PRD before Cursor, Lovable, Bolt, or v0](https://founderbreif.vercel.app/guides/prd-for-cursor-lovable-bolt)
+- [How a non-technical founder briefs a developer](https://founderbreif.vercel.app/guides/how-to-brief-a-developer-non-technical-founder)
+- [PRD vs spec vs roadmap](https://founderbreif.vercel.app/guides/prd-vs-spec-vs-roadmap)
+- [ChatPRD alternatives](https://founderbreif.vercel.app/guides/chatprd-alternatives)
 - [About](https://founderbreif.vercel.app/about): What the product is and who it serves
 - [Privacy](https://founderbreif.vercel.app/privacy): Data handling, local storage, AI processing
 

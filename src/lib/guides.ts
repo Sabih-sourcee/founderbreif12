@@ -1,6 +1,13 @@
+import { NEW_GUIDES } from "./guide-entries";
+
 export type GuideFaq = { question: string; answer: string };
 
-export type GuideSection = { heading: string; paragraphs: string[] };
+export type GuideSection = {
+  heading: string;
+  paragraphs: string[];
+  /** Optional copyable block rendered under the paragraphs. */
+  template?: { title: string; body: string };
+};
 
 export type Guide = {
   slug: string;
@@ -10,6 +17,10 @@ export type Guide = {
   answer: string;
   sections: GuideSection[];
   faqs: GuideFaq[];
+  /** ISO date (YYYY-MM-DD) for Article JSON-LD. */
+  datePublished?: string;
+  /** Other guide slugs linked from the page. */
+  related?: readonly string[];
 };
 
 export const GUIDES: readonly Guide[] = [
@@ -253,6 +264,7 @@ export const GUIDES: readonly Guide[] = [
       },
     ],
   },
+  ...NEW_GUIDES,
 ];
 
 export function getGuide(slug: string): Guide | undefined {

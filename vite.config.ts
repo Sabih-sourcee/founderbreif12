@@ -13,18 +13,28 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // Nitro's Vercel preset writes the server to .vercel/output, not dist/server/server.js.
 // TanStack's preview middleware then throws ERR_MODULE_NOT_FOUND and Vite turns that
 // into HTTP 500 before the static sitemap can be served. Answer /sitemap.xml first.
-function serveSitemapInPreview(): Plugin {
-  const file = resolve(process.cwd(), "public/sitemap.xml");
+function servePublicFilesInPreview(): Plugin {
+  const files: Record<string, { path: string; type: string }> = {
+    "/sitemap.xml": {
+      path: resolve(process.cwd(), "public/sitemap.xml"),
+      type: "application/xml; charset=utf-8",
+    },
+    "/332021a187e8d32643c66d9c79f3c394.txt": {
+      path: resolve(process.cwd(), "public/332021a187e8d32643c66d9c79f3c394.txt"),
+      type: "text/plain; charset=utf-8",
+    },
+  };
   return {
-    name: "serve-sitemap-preview",
+    name: "serve-public-files-preview",
     configurePreviewServer(server) {
       server.middlewares.use((req, res, next) => {
         const pathname = (req.url ?? "").split("?")[0];
-        if (pathname !== "/sitemap.xml") return next();
+        const file = files[pathname];
+        if (!file) return next();
         if (req.method !== "GET" && req.method !== "HEAD") return next();
-        const body = readFileSync(file);
+        const body = readFileSync(file.path);
         res.statusCode = 200;
-        res.setHeader("Content-Type", "application/xml; charset=utf-8");
+        res.setHeader("Content-Type", file.type);
         res.setHeader("Content-Length", String(body.length));
         res.end(req.method === "HEAD" ? undefined : body);
       });
@@ -41,6 +51,6 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
-    plugins: [serveSitemapInPreview()],
+    plugins: [servePublicFilesInPreview()],
   },
 });

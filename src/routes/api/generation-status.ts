@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { verifyAdminToken, tokenFromRequest } from "@/lib/auth.server";
 import { corsHeaders } from "@/lib/brief-generator.server";
+import { FREE_MONTHLY_LIMIT } from "@/app/usage";
 
 export const Route = createFileRoute("/api/generation-status")({
   server: {
@@ -15,8 +16,8 @@ export const Route = createFileRoute("/api/generation-status")({
           {
             isAdmin,
             used: 0,
-            limit: isAdmin ? null : 1,
-            remaining: isAdmin ? null : 1,
+            limit: isAdmin ? null : FREE_MONTHLY_LIMIT,
+            remaining: isAdmin ? null : FREE_MONTHLY_LIMIT,
           },
           { headers: corsHeaders() },
         );

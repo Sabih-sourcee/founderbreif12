@@ -16,13 +16,13 @@ export const Route = createFileRoute("/privacy")({
 
 function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans">
-      <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur-md">
+    <div className="min-h-screen bg-[#DAF7F3] text-[#1C2120] font-sans">
+      <header className="sticky top-0 z-30 bg-[#DAF7F3]">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-6">
           <LogoLink to="/" size="sm" />
           <Link
             to="/"
-            className="text-sm text-[color:var(--subtle-foreground)] transition-colors hover:text-foreground"
+            className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#1C2120] shadow-[0_6px_14px_rgba(28,33,32,0.10)]"
           >
             Back to home
           </Link>

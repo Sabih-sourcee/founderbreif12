@@ -1,0 +1,38 @@
+{
+  "url": "https://founderbreif.vercel.app",
+  "brand": "Founderbreif",
+  "closingLine": "One brief. Every Monday.",
+  "italicTail": "No noise.",
+  "duration": 14.5,
+  "width": 1440,
+  "height": 1152,
+  "fps": 60,
+  "captureWidth": 1440,
+  "deviceScaleFactor": 2,
+  "layerPad": 28,
+  "studio": {
+    "center": "#f9fbfb",
+    "corners": "#f2f3f6"
+  },
+  "pageCornerRadius": 24,
+  "heroCardCornerRadius": 38,
+  "camera": {
+    "focalLength": 1880,
+    "tiltDeg": 56,
+    "distanceStart": 1360,
+    "distanceEnd": 1700,
+    "cruisePagePxPerSec": 770
+  },
+  "logo": {
+    "asset": "assets/logo.png",
+    "tileSize": 32
+  },
+  "title": {
+    "line1": "One brief. Every Monday.",
+    "line2": "No noise.",
+    "fontSans": "Geist",
+    "fontSerif": "Instrument Serif",
+    "weight": 500
+  },
+  "stills": [0, 1.6, 2.5, 5, 6.5, 9.3, 11]
+}

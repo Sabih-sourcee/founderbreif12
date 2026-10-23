@@ -1,0 +1,20 @@
+{
+  "name": "founderbreif-flyover",
+  "version": "1.0.0",
+  "private": true,
+  "description": "3D landing-page flyover film for Founderbreif",
+  "scripts": {
+    "prepare-logo": "node scripts/prepare-logo.js",
+    "capture": "node scripts/capture.js",
+    "stills": "node scripts/export-stills.js",
+    "serve": "npx --yes serve film -p 4177",
+    "render:preview": "node scripts/render-preview.js --fps 30",
+    "render": "node scripts/render-preview.js --fps 60",
+    "build:stills": "npm run prepare-logo && npm run capture && npm run stills"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0",
+    "pngjs": "^7.0.0",
+    "serve": "^14.2.4"
+  }
+}

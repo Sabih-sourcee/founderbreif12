@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1440" />
+  <title>Founderbreif Flyover Film</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #0e0f12;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #stage {
+      position: relative;
+      width: 1440px;
+      height: 1152px;
+      flex-shrink: 0;
+      background: #f2f3f6;
+    }
+    #gl {
+      display: block;
+      width: 1440px;
+      height: 1152px;
+    }
+    #titleOverlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: "Geist", system-ui, sans-serif;
+      font-weight: 500;
+      color: #111;
+    }
+    #badge {
+      position: absolute;
+      top: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 18px 8px 10px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 8px 28px rgba(26,33,51,0.08);
+    }
+    #badge img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+    #badge span {
+      font-size: 21px;
+      letter-spacing: -0.02em;
+      color: #161616;
+    }
+    #line1, #line2 {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      white-space: nowrap;
+      display: flex;
+      gap: 0.28em;
+      justify-content: center;
+    }
+    #line1 {
+      top: 74px;
+      font-size: 74px;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    #line2 {
+      top: calc(74px + 82px + 8px);
+      font-size: 82px;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      color: #8b8b92;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    #line1 .w, #line2 .w {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(12px);
+      transform: translateY(16px);
+    }
+    #hud {
+      position: fixed;
+      left: 12px;
+      bottom: 12px;
+      color: #9aa;
+      font: 12px/1.4 ui-monospace, monospace;
+      z-index: 10;
+      background: rgba(0,0,0,0.55);
+      padding: 8px 10px;
+      border-radius: 6px;
+    }
+    body.export #hud { display: none !important; }
+  </style>
+</head>
+<body>
+  <div id="stage">
+    <canvas id="gl" width="1440" height="1152"></canvas>
+    <div id="titleOverlay">
+      <div id="badge">
+        <img src="../assets/logo.png" alt="" />
+        <span>Founderbreif</span>
+      </div>
+      <div id="line1"></div>
+      <div id="line2"></div>
+    </div>
+  </div>
+  <div id="hud">loading…</div>
+  <script src="./film.js"></script>
+</body>
+</html>

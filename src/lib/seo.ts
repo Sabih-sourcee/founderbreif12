@@ -5,10 +5,9 @@ export const SITE_NAME = "FounderBrief";
 export const OG_IMAGE =
   "https://storage.googleapis.com/gpt-engineer-file-uploads/kh4Tf3hCPKXaHih8KZC0cbKy3PR2/social-images/social-1781646801887-founderbriefe.webp";
 
-export const DEFAULT_TITLE =
-  "FounderBrief — Your weekly brief, built for founders who ship";
+export const DEFAULT_TITLE = "FounderBrief — Speak an idea. Get a document.";
 export const DEFAULT_DESCRIPTION =
-  "FounderBrief turns your strategy, metrics, and priorities into one calm weekly brief every Monday — so founders decide instead of drowning in dashboards.";
+  "FounderBrief turns a spoken or typed idea into a PRD, business plan, resume, pitch deck, or brief — then exports it or reads it aloud.";
 
 export type PageSeoInput = {
   title?: string;

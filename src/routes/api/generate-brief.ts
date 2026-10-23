@@ -1,14 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { corsHeaders, generateBriefFromIdea } from "@/lib/brief-generator.server";
-import { DEFAULT_BRIEF_ANSWERS, type BriefAnswers } from "@/types/brief";
+import { generateDocumentFromIdea } from "@/lib/generate-document.server";
+import { corsHeaders } from "@/lib/brief-generator.server";
+import { DEFAULT_ANSWERS, type BriefAnswers, type DocumentOutputType, type SpokenLanguage } from "@/app/types";
 
-function normalizeAnswers(answers?: BriefAnswers): BriefAnswers {
-  if (!answers) return DEFAULT_BRIEF_ANSWERS;
+function normalizeAnswers(answers?: Partial<BriefAnswers>): BriefAnswers {
+  if (!answers) return DEFAULT_ANSWERS;
   return {
-    ...DEFAULT_BRIEF_ANSWERS,
+    ...DEFAULT_ANSWERS,
     ...answers,
-    gridSystem: (answers.gridSystem?.replace(/×/g, "x") ?? DEFAULT_BRIEF_ANSWERS.gridSystem) as BriefAnswers["gridSystem"],
+    calibration: Array.isArray(answers.calibration) ? answers.calibration : undefined,
   };
 }
 
@@ -20,7 +21,10 @@ export const Route = createFileRoute("/api/generate-brief")({
         try {
           const body = (await request.json()) as {
             idea?: string;
-            answers?: BriefAnswers;
+            answers?: Partial<BriefAnswers>;
+            documentType?: DocumentOutputType;
+            spokenLanguage?: SpokenLanguage;
+            deviceId?: string;
           };
 
           if (!body.idea?.trim()) {
@@ -30,9 +34,13 @@ export const Route = createFileRoute("/api/generate-brief")({
             );
           }
 
-          const brief = await generateBriefFromIdea(
+          const documentType = body.documentType ?? "PRD";
+          const spokenLanguage = body.spokenLanguage ?? "English";
+          const brief = await generateDocumentFromIdea(
             body.idea.trim(),
             normalizeAnswers(body.answers),
+            documentType,
+            spokenLanguage,
           );
 
           return Response.json(brief, { headers: corsHeaders() });

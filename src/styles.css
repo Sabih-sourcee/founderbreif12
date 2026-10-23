@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "./app/app.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -33,28 +34,43 @@
   --color-ring: var(--foreground);
   --color-success: var(--success);
 
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --background: #FAF8F5;
-  --foreground: #1A1A1A;
-  --surface: #F2EEE8;
-  --muted-foreground: #6B6B6B;
-  --subtle-foreground: #444748;
-  --border: #E5DDD3;
-  --primary: #1A1A1A;
-  --primary-foreground: #FAF8F5;
-  --accent: #E07B39;
-  --accent-foreground: #FFFFFF;
-  --success: #3F7D58;
-  --radius: 8px;
+  --fb-bg: #daf7f3;
+  --fb-white: #ffffff;
+  --fb-accent: #fbff28;
+  --fb-ink: #1c2120;
+  --fb-ink-muted: rgba(28, 33, 32, 0.62);
+  --fb-ink-soft: rgba(28, 33, 32, 0.46);
+  --fb-ink-faint: rgba(28, 33, 32, 0.24);
+  --fb-ink-track: rgba(28, 33, 32, 0.14);
+  --fb-ink-wash: rgba(28, 33, 32, 0.07);
+  --fb-white-soft: #edfbf9;
+  --fb-white-on-ink: rgba(255, 255, 255, 0.72);
+  --fb-scrim: rgba(28, 33, 32, 0.3);
+  --fb-shadow: 0 6px 14px rgba(28, 33, 32, 0.1);
+
+  --background: #daf7f3;
+  --foreground: #1c2120;
+  --surface: #ffffff;
+  --muted-foreground: rgba(28, 33, 32, 0.62);
+  --subtle-foreground: rgba(28, 33, 32, 0.62);
+  --border: rgba(28, 33, 32, 0.14);
+  --primary: #1c2120;
+  --primary-foreground: #ffffff;
+  --accent: #fbff28;
+  --accent-foreground: #1c2120;
+  --success: #1c2120;
+  --radius: 22px;
 }
 
 @layer base {
   * {
     border-color: var(--color-border);
+    box-sizing: border-box;
   }
   html {
     font-family: var(--font-sans);
@@ -62,19 +78,18 @@
     text-rendering: optimizeLegibility;
   }
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font-feature-settings: "ss01", "cv11";
-    line-height: 1.65;
+    background-color: var(--fb-bg);
+    color: var(--fb-ink);
+    margin: 0;
+    line-height: 1.45;
   }
   h1, h2, h3, h4 {
     letter-spacing: -0.02em;
     font-weight: 700;
     line-height: 1.1;
   }
-  h5, h6 {
-    letter-spacing: -0.01em;
-    font-weight: 600;
+  button, input, textarea {
+    font-family: inherit;
   }
 }
 
